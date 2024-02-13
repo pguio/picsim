@@ -1,6 +1,6 @@
 /**************************************************************************
  *
- * $Id: pdf.cpp,v 1.81 2016/06/15 17:57:38 patrick Exp $
+ * $Id: pdf.cpp,v 1.82 2024/02/13 19:28:18 patrick Exp $
  *
  * Copyright (c) 2000-2011 Patrick Guio <patrick.guio@gmail.com>
  * All Rights Reserved.
@@ -36,7 +36,7 @@ namespace pdf {
 
   using std::ostream;
 
-#define ID "$Id: pdf.cpp,v 1.81 2016/06/15 17:57:38 patrick Exp $"
+#define ID "$Id: pdf.cpp,v 1.82 2024/02/13 19:28:18 patrick Exp $"
 
 #if 0
   template <typename T_num>
@@ -70,7 +70,7 @@ namespace pdf {
 // The dirty trick to remedy is to use different seeding
 #if defined(HAVE_MPI)
 #if 1
-    rngint recv, *send;
+    rngint recv, *send=0;
     if (rankProc == masterProc) {
       rng.seed(seed);
       send = new rngint[nbProc];
