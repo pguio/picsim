@@ -1,0 +1,1504 @@
+2024-01-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species-handler.cpp (1.52):
+	Removed unecessary SpeciesListConstIter iterator variable.
+
+2023-10-13  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f38_x86_64_gcc+openmpi_optim_jazz6 (1.1):
+	New config for MPI+GCC for jazz6 with Fedora 38.
+
+2023-02-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.128), mudfas/configure.ac (1.118):
+	Updated with autoupdate 2.71.
+
+2023-02-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.127), mudfas/configure.ac (1.117):
+	Added option subdir-objects to AM_INIT_AUTOMAKE().
+
+2020-07-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f32_x86_64_gcc_optim_jazz5 (1.1):
+	New config for jazz5.
+
+2020-04-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_check2.conf (1.1), share/gravity_wave2d2.conf
+	  (1.1):
+	Picsim configuration files with gravity enabled.
+
+2020-04-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.186):
+	Fixed double value 0 to 0.0.
+
+2020-04-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.185):
+	Fixed warning of unitialised variable RVectord weight.
+
+2020-04-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f31_x86_64_gcc_optim_jazz3 (1.1):
+	New config for jazz3 running fedora 31.
+
+2019-11-27  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f31_x86_64_gcc_optim_jazz4 (1.1):
+	New config for fedora 31 to deal with hdf5 1.10.x.
+
+2019-10-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f29_x86_64_gcc_optim_jazz4 (1.2):
+	Updated to use with newer github blitz.
+
+2019-05-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/tests/TestSolver.cpp (1.11), tests/Picsim.cpp.in (1.42):
+	Removed BZ_STD_SCOPE as deprecated in Blitz.
+
+2019-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f29_x86_64_gcc_optim_jazz4 (1.1),
+	  config/sites/f29_x86_64_pgc++_optim_jazz4 (1.1):
+	Updated from f26_x86_64_gcc_optim_jazz4.
+
+2019-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f26_x86_64_gcc_optim_jazz4 (1.3):
+	Fixed typo cXX -> CXX
+
+2018-03-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.6):
+	Added code to deal with G=0.
+
+2017-12-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/generic-es-picsim.cpp (1.14):
+	Fixed bug where solver boundary Gbdy was initialised with alfa from species.
+	Need more attention!
+
+2017-12-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.5):
+	Added diagnostic for minimum Lambda parameter required.
+
+2017-12-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/write_nhbgrd_model.m (1.3):
+	Fixed output format to deal with small numbers.
+
+2017-12-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.102), mudfas/src/mudfas.h (1.103):
+	Enabled parsing of parameters for mixed boundary (alfa and gbdy).
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_pulse2d.conf (1.9), share/gravity_wave2d.conf
+	  (1.13):
+	Added comments and options.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f26_x86_64_clang_optim_jazz4 (1.1),
+	  config/sites/f26_x86_64_gcc_optim_jazz4 (1.1):
+	New configurations for single processor compilation on jazz4.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.4):
+	Fixed example in help.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/drivennonhombackgrd.cpp (1.3):
+	Fixed loop counter type to remove g++ warning.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Picsim.cpp.in (1.41):
+	Test returned status of getrusage().
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.184):
+	Forced type of any() function by constructor to avoid error with g++ 7.2.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/drivenbackgrd.cpp (1.81), src/drivenbackgrd.h (1.43):
+	Added virtual modifier initialise(), currently just executing
+	Backgrd::initialise().
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.76):
+	Save Te and ne fields as matlab m-files if debugLevel >=5.
+
+2017-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas-defs.h (1.47):
+	Added template functions saveMatlab for scalar, 1d, 2d and 3d arrays.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_pulse2d.conf (1.8):
+	Added MPI support for single CPU run.
+	Added comment with Matlab code to generate density file.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_check.conf (1.8):
+	Added support to run with MPI as one CPU.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.75):
+	Fixed test to check file reading correctness and added exception throwing.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.3):
+	Fixed example in help section.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Makefile.am (1.54):
+	Added support for compiling testRNG.
+
+2017-11-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/testRNG.cpp (1.1):
+	Late adding in repo: RNG test program written from 26 Mar 2012!
+
+2017-09-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f26_x86_64_clang+mpich_optim_jazz4 (1.1):
+	New config file for clang++ compiler on jazz4.
+
+2017-09-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/surface.h (1.26):
+	Swaped header in order to have the definition of template operator<< prior
+	to definition of class Any.
+
+2016-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/fc24_x86_64_ifort+mpich_optim_jazz3 (1.1):
+	Added upgraded configuraion file for MPI and Intel compiler on jazz3 running
+	Fedora Core 24.
+
+2016-06-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sl6.0_x86_64_ifort_optim_phalanx (1.1):
+	New configuration for phalanx running SL6.
+
+2016-06-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.81):
+	More harmonisation of seed type rngint.
+
+2016-06-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.2):
+	Commented code.
+	Added comparison with C++ implementation.
+
+2016-06-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/hydrostatic.m (1.1):
+	Compute a hydrostatic profile and initialise a 2d/3d array for given PicSim
+	parameters.
+
+2016-06-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/mirror.m (1.1):
+	Example of linear magnetic bottle field calculation.
+
+2016-06-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/mdipole.m (1.1):
+	Example of tilted dipolar magnetic field.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.126):
+	Updated to version 2.1.3.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_beam2d.conf (1.14):
+	Added required initialisation of bgrd::Thydro and beam::Thydro and fixed
+	phase space specs.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/beam.cpp (1.124):
+	Fixed a bug where hydrostatic equilibrium correction for density was
+	wrongly calculated when no initialisation of hydrostatic temperature.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Picsim.cpp.in (1.40):
+	Added a std::exception catch, added const modifier to all catch's and
+	reviewed their ordering.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/phase-space.cpp (1.51):
+	Improved exception message for improper start,stride,end spec.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_pulse2d.conf (1.7):
+	Added required initialisation of bgrd:Thydro.
+
+2016-06-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_wave2d.conf (1.12):
+	Added required initialisation of bgrd:Thydro.
+
+2016-06-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/gravity_check.conf (1.7):
+	Added some comments.
+
+2016-06-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.80), src/pdf.h (1.51):
+	Defined seed type rngint and harmonise where necessary.
+
+2015-11-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/traceParticleinMagneticDipole.m (1.4),
+	  matlab/traceParticleinMagneticMirror.m (1.3):
+	Cosmetic updates with labels.
+	Fixed issue with tspan given as (tmin,tmax) or sample time vector.
+
+2015-11-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.16):
+	Added MPI process info for some particle counting diagnostics.
+
+2015-11-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.15):
+	Added debug level control for some particle counting diagnostics.
+
+2015-11-06  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsim-debug.h (1.8):
+	Added macro END_DEBUG_OUTPUT0 that does not close the output stream.
+
+2015-11-04  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/rh5.9_x86_64_ifort_optim_phalanx (1.1):
+	Added config for MPI-enabled ifort on phalanx.
+
+2015-04-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/traceParticleinMagneticDipole.m (1.3):
+	Fixed print command to work with Matlab R2015a.
+
+2014-09-05  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f19_x86_64_ifort_optim_jazz3 (1.2):
+	Updated deprecated option for vectorisation reporting in Intel icpc
+	15.0.0 20140723.
+
+2013-11-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species-handler.cpp (1.51):
+	Added comment/suggestion of Carlo Cavazzoni @ CINECA about use of MPI_Reduce
+	instead of MPI_Gather as it is most likely best optimised.
+
+2013-11-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f19_x86_64_ifort_optim_jazz3 (1.1):
+	Configuration for jazz3 (64 bits Fedora 19).
+
+2013-11-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* lib/Makefile.am (1.19), mudfas/lib/Makefile.am (1.4),
+	  mudfas/tests/Makefile.am (1.39), tests/Makefile.am (1.53):
+	Updated INCLUDES target name to AM_CPPFLAGS as recommended.
+
+2013-03-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.17):
+	Added a reference to self gravity.
+
+2012-12-18  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/fermi_mpixlcxx_cineca (1.2),
+	  config/sites/fermi_mpixlcxx_optim_cineca (1.1):
+	Added parallel optimised configuration for the IBM Blue Gene Fermi at CINECA.
+
+2012-12-17  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/fermi_mpixlcxx_cineca (1.1):
+	Added parallel default configuration for the IBM Blue Gene Fermi at CINECA.
+
+2012-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.125):
+	Updated to version 2.1.2.
+
+2012-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.116):
+	Bundled to patch version 2.0.3.
+
+2012-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.115), configure.ac (1.124):
+	Added available hdf5 support through --enable-hdf5-output.
+
+2012-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f16_x86_64_ifort_optim_jazz2 (1.1):
+	Configurations for updated jazz2 (64 bits Fedora 16).
+
+2012-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/tests/test-solver.h (1.20):
+	Fixed HDF4 cpp macros safeguarding.
+
+2012-03-30  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/plx_icpc+mpiCC+skin_cineca (1.1),
+	  config/sites/plx_icpc+mpiCC_cineca (1.2),
+	  config/sites/plx_icpc_cineca (1.3),
+	  config/sites/sp6_xlC+mpCC_optim_cineca (1.3):
+	More changes in CINECA config files.
+
+2012-03-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/plx_icpc+mpiCC_cineca (1.1):
+	Added configuration for openMPI on PLX.
+
+2012-03-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/plx_icpc_cineca (1.1):
+	Added default seto for PLX@CINECA.
+
+2012-03-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sp6_xlC+mpCC+skin_cineca (1.4): Updated to latest optim setup.
+
+2012-03-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/Makefile.am (1.40): Removed unused and not cvs-controlled file c++-tools/fourier-fftw3.cpp from
+	the distro and install lists.
+
+2012-03-27  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sp6_xlC+mpCC_optim_cineca (1.2): Added tested optimisation options. Apparently Optim3 is the best guess.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/version.sty.in (1.1):
+	Version template file.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.114):
+	Bundled to patch version 2.0.2.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.113):
+	Added generation of LaTeX version file.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/poisson.tex (1.11):
+	Added information on version to the documentation.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.123):
+	Added generation of LaTeX version file.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.16), doc/version.sty.in (1.1):
+	Added information on version to the documentation.
+
+2012-02-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.122):
+	Updated to version 2.1.1.
+
+2012-02-28  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.79):
+	Activated alternative trick to fix the number of RNG's currently limited
+	to 48: nproc seeds are drawn on master processor after initial seeding and
+	are scattered onto each task to seed each RNG.
+
+2012-02-27  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.78): Activated dirty trick to fix the number of RNG's currently limited to 48.
+
+2012-02-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sp6_xlC+mpCC_optim_cineca (1.1): Added optimisation config for IBM SP6 @ CINECA.
+
+2012-02-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sp6_xlC+mpCC_cineca (1.4): Modified default config to be no optimisation -O0.
+
+2012-02-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species-handler.cpp (1.50):
+	Fixed MPI datatype to MPI_FIELD when reducing density field.
+	Added reporting of max/min values of density field in debug mode.
+
+2012-02-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsim-debug.h (1.7):
+	Added an extra MPI_Barrier to ensure clean reporting.
+
+2012-02-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/scheduler.cpp (1.99):
+	Cosmetic fix.
+
+2012-02-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.15):
+	Minor cosmetic change.
+
+2012-02-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.14):
+	Minor update.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/poisson.tex (1.10):
+	Updated standard.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.13):
+	Minor fix.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.12):
+	Minor cosmetic change.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/picsim.tex (1.11):
+	More updated text.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/pic_cycle.fig (1.2), doc/pic_grid.fig (1.2), doc/picsim.tex
+	  (1.10):
+	Updated documentation from documentation written for EMDAF Modelling suite
+	specification document of Europlanet JRA3.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/Makefile.am (1.4):
+	Added some targets for the Xfig files.
+
+2012-01-25  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/pic_cycle.fig (1.1), doc/pic_grid.fig (1.1):
+	Xfig sketches for PIC summary.
+
+2011-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/Makefile.am (1.39):
+	More fix for EXTRA_DIST target.
+
+2011-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* Makefile.am (1.14), matlab/Makefile.am (1.10):
+	More fix for EXTRA_DIST targets.
+
+2011-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/Makefile.am (1.38), mudfas/Makefile.am (1.13):
+	More fix for EXTRA_DIST target.
+
+2011-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* Makefile.am (1.13), src/Makefile.am (1.47), tests/Makefile.am
+	  (1.52):
+	Updated EXTRA_DIST targets.
+
+2011-11-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/Makefile.am (1.12), mudfas/src/Makefile.am (1.37),
+	  mudfas/tests/Makefile.am (1.38):
+	Fixed EXTRA_DIST targets.
+
+2011-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Picsim.cpp.in (1.39):
+	Added conditional support for getrusage. More work to be done to create
+	a utility class for resources usage.
+
+2011-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.121):
+	Replaced call to AC_CHECK_HEADERS instead of AC_CHECK_HEADER.
+	Added check for header <sys/resource.h> that include getrusage.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Picsim.cpp.in (1.38):
+	Extended timer diagnostic for real, user, sys and mpi when available.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.112):
+	Bundled to patch version 2.0.1.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.120):
+	Bundled version 2.1.0.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/generic-picsim.cpp (1.60):
+	Force cout stream flush when using MPI in order to prevent mixed output
+	from different tasks.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.77):
+	Moved MPI_Barrrier as recommended, i.e. just before the test on processor
+	rank and removed unecessary ones.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsim-debug.h (1.6):
+	Moved MPI_Barrrier as recommended, i.e. just before the test on processor
+	rank.
+
+2011-11-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Picsim.cpp.in (1.37):
+	Cosmetic change, astyle'd.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/sp6_xlC+mpCC+skin_cineca (1.1),
+	  config/sites/sp6_xlC+mpCC_cineca (1.1),
+	  config/sites/sp6_xlC_cineca (1.1): Added configure configuration for the IBM SP6 at CINECA.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* config/sites/f14_ia32_ifort+mpich2+skin_optim_jazz2 (1.1),
+	  config/sites/f14_ia32_ifort+mpich2_optim_jazz2 (1.1),
+	  config/sites/f14_ia32_ifort_optim_jazz2 (1.2):
+	Added configuration for PG's laptop.
+	You should run the following configure command:
+	./configure CONFIG_FILE=`pwd`/config/sites/<config_file>
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsime.cpp (1.49), src/picsimei.cpp (1.17), src/picsimi.cpp
+	  (1.73):
+	Added new MPI solution to deal with solving for the gridded ES field from
+	charge density field on all processors: each process calls the solve
+	member function.
+	The old solution to solve for the ES field only on master process
+	remains available when defining the cpp macro SOL1.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/generic-es-picsim.cpp (1.13):
+	Added new MPI solution to deal with solving for the gridded ES field from
+	charge density field on all processors: the solver needs to be initialised
+	for all processors.
+	The old solution to solve for the ES field only on master process
+	remains available when defining the cpp macro SOL1.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.101):
+	Cosmetic change in comments.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species-handler.cpp (1.49):
+	Added new MPI solution to deal with charge deposit onto grid: The total
+	density field Rhos is made available to all processes using MPI_Allreduce.
+	The old solution with total density field only available on master process
+	remains available when defining the cpp macro SOL1.
+	Removed species types not used from the output stream of the SpeciesHandler
+	class.
+
+2011-11-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.100):
+	Added fireguard to print solver status of only masterProc when using MPI.
+
+2011-11-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/boundary.h (1.14), mudfas/src/init.cpp (1.54),
+	  mudfas/src/poisson-boltzmann.h (1.46), mudfas/src/poisson.h
+	  (1.26), src/scheduler.h (1.93), src/surface.h (1.25):
+	Added macro for conditional compilation depending on whether the "old"
+	blitz is in use or the new version with unified template machinery.
+
+2011-11-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.74):
+	Use explicit constructor to avoid compilation problem with ifort and the
+	new blitz with unified template machinery.
+
+2011-11-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.76), src/pdf.h (1.50):
+	Replaced template friend output operator of template class NumberGenerator
+	as a simple friend operator with type defined as the class template type.
+
+2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/generic-picsim.cpp (1.59):
+	Added detailed report on command executed.
+
+2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.119):
+	Bundled version 2.0.0.
+
+2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* update-cl.sh (1.3), doc/energy2d.m (1.2), doc/energy3d.m (1.2),
+	  doc/kinetic.m (1.2), doc/picsim.tex (1.9), doc/startup.m (1.2),
+	  matlab/E.m (1.4), matlab/F.m (1.4), matlab/N.m (1.4), matlab/P.m
+	  (1.7), matlab/R.m (1.4), matlab/U.m (1.5), matlab/backgrd_bnd.m
+	  (1.6), matlab/backgrd_const.m (1.4), matlab/backgrd_def.m (1.6),
+	  matlab/backgrd_init.m (1.5), matlab/backgrd_par_parsing.m (1.5),
+	  matlab/beam_bnd.m (1.5), matlab/beam_def.m (1.4),
+	  matlab/beam_init.m (1.6), matlab/beam_par_parsing.m (1.4),
+	  matlab/beam_stat.m (1.4), matlab/beam_test_seff1d.m (1.11),
+	  matlab/checkperturb.m (1.9), matlab/dipoleMagneticEquiPotential.m
+	  (1.2), matlab/dipoleMagneticField.m (1.2),
+	  matlab/dipoleMagneticPotential.m (1.2), matlab/field_plot.m
+	  (1.5), matlab/field_to_particles.m (1.5), matlab/findfrq.m (1.2),
+	  matlab/findkxky.m (1.2), matlab/fluxCDF.m (1.3), matlab/ishdf.m
+	  (1.2), matlab/makemovie2d.m (1.10), matlab/makemovie2d2field.m
+	  (1.7), matlab/makemovie3d.m (1.5), matlab/makemovie3yfxz.m (1.3),
+	  matlab/makemovieslicer.m (1.3), matlab/makemovieyfxz.m (1.4),
+	  matlab/mirrorMachine.m (1.2), matlab/particles_bnd.m (1.4),
+	  matlab/particles_mover.m (1.5), matlab/particles_plot.m (1.5),
+	  matlab/particles_to_moments.m (1.4), matlab/particles_to_rho.m
+	  (1.6), matlab/particles_tracer.m (1.5), matlab/perturbCDF.m
+	  (1.4), matlab/phasespace_to_moments.m (1.4),
+	  matlab/phi_to_efield.m (1.6), matlab/picsim2d.m (1.8),
+	  matlab/picsim3d.m (1.8), matlab/picsim_init1_2d.m (1.5),
+	  matlab/picsim_init1_3d.m (1.5), matlab/picsim_init2_2d.m (1.5),
+	  matlab/picsim_init2_3d.m (1.5), matlab/picsim_init3_2d.m (1.5),
+	  matlab/picsim_init3_3d.m (1.5), matlab/picsim_init4_2d.m (1.4),
+	  matlab/picsim_init4_3d.m (1.2), matlab/plot2dfield.m (1.12),
+	  matlab/plot3dfield.m (1.10), matlab/plotion.m (1.8),
+	  matlab/plotiongravity.m (1.6), matlab/plotis.m (1.5),
+	  matlab/plotphic2d.m (1.3), matlab/plotslice2d.m (1.8),
+	  matlab/plotslice3d.m (1.6), matlab/plotvector.m (1.7),
+	  matlab/randexp.m (1.3), matlab/randflux.m (1.7), matlab/randlin.m
+	  (1.2), matlab/randperturb.m (1.8), matlab/randperturb2d.m (1.2),
+	  matlab/randrayleigh.m (1.3), matlab/read_nhbgrd_model.m (1.2),
+	  matlab/readhdf.m (1.14), matlab/rho_to_efield.m (1.4),
+	  matlab/rotation.m (1.3), matlab/scheduler2d_def.m (1.5),
+	  matlab/scheduler3d_def.m (1.5), matlab/scheduler_const.m (1.4),
+	  matlab/scheduler_init.m (1.4), matlab/scheduler_par_parsing.m
+	  (1.5), matlab/scheduler_update.m (1.4), matlab/solve_rho_to_phi.m
+	  (1.4), matlab/solver2d.m (1.5), matlab/solver3d.m (1.5),
+	  matlab/solver_init.m (1.6), matlab/startup.m (1.5),
+	  matlab/testdriven2d.m (1.7), matlab/testdriven3d.m (1.12),
+	  matlab/testfft2.m (1.3), matlab/testflux.m (1.8),
+	  matlab/testperturb.m (1.7), matlab/timespec.m (1.7),
+	  matlab/traceParticleinMagneticDipole.m (1.2),
+	  matlab/traceParticleinMagneticMirror.m (1.2),
+	  matlab/tracer_init.m (1.5), matlab/view_particles.m (1.4),
+	  matlab/view_scheduler.m (1.4), matlab/write_nhbgrd_model.m (1.2),
+	  share/2beam2d.conf (1.9), share/bi-ion2d.conf (1.6),
+	  share/burst_beam2d.conf (1.10), share/daldorff_alpha_et_al.conf
+	  (1.5), share/daldorff_alpha_et_al.conf4p (1.4),
+	  share/daldorff_et_al.conf (1.4), share/drift2d.conf (1.10),
+	  share/drift2d.conf3p (1.8), share/drift3d.conf (1.6),
+	  share/drift3d.conf3p (1.3), share/drift3d.conf4p (1.6),
+	  share/drift3d.conf8p (1.3), share/dust1_2d.conf (1.7),
+	  share/dust1_3d.conf (1.8), share/dust2_2d.conf (1.7),
+	  share/dust2_3d.conf (1.8), share/dust3_2d.conf (1.6),
+	  share/dust3_3d.conf (1.7), share/dust4_2d.conf (1.5),
+	  share/dust4_3d.conf (1.2), share/dustobs_2d.conf (1.4),
+	  share/dustobs_3d.conf (1.3), share/fb0vacuum2d.conf (1.8),
+	  share/fb0vacuum3d.conf (1.6), share/fb1vacuum2d.conf (1.9),
+	  share/fb1vacuum3d.conf (1.6), share/gravity_beam2d.conf (1.13),
+	  share/gravity_check.conf (1.6), share/gravity_is2d.conf (1.5),
+	  share/gravity_pulse2d.conf (1.6), share/gravity_wave2d.conf
+	  (1.11), share/gravity_wave3d.conf (1.13),
+	  share/guio_et_al2000fig11.conf (1.14),
+	  share/guio_et_al2000fig6.conf (1.19),
+	  share/guio_et_al2000fig9.conf (1.14), share/ib0vacuum2d.conf
+	  (1.7), share/ib0vacuum3d.conf (1.5), share/ib1vacuum2d.conf
+	  (1.8), share/ib1vacuum3d.conf (1.5), share/inf_beam2d.conf (1.9),
+	  share/inj_ebeam.conf (1.5), share/inj_ebeam.conf4p (1.5),
+	  share/inj_ebeam.conf8p (1.4), share/kh.conf (1.4),
+	  share/kh2bgrd.conf (1.13), share/kh2bgrd3d.conf (1.5),
+	  share/kh2dgrowth.conf (1.4), share/max2t.conf (1.5),
+	  share/maxwell_alpha.conf (1.6), share/mpi_test.conf16p (1.6),
+	  share/mpi_test.conf1p (1.9), share/mpi_test.conf24p (1.2),
+	  share/mpi_test.conf2p (1.6), share/mpi_test.conf32p (1.2),
+	  share/mpi_test.conf3p (1.6), share/mpi_test.conf48p (1.2),
+	  share/mpi_test.conf4p (1.8), share/mpi_test.conf64p (1.2),
+	  share/mpi_test.conf8p (1.6), share/nogravity_beam2d.conf (1.4),
+	  share/pb0vacuum2d.conf (1.7), share/pb0vacuum3d.conf (1.6),
+	  share/pb1vacuum2d.conf (1.8), share/pb1vacuum3d.conf (1.6),
+	  share/perio_ebeam.conf (1.7), share/perio_ebeam.conf4p (1.4),
+	  share/perio_eibeam.conf (1.4), share/perio_eibeam.conf3p (1.5),
+	  share/perio_ibeam.conf (1.7), share/periodic_beam2d.conf (1.9),
+	  share/periodic_beam3d.conf (1.4), share/periodic_is2d.conf
+	  (1.15), share/polar_wind2d.conf (1.9), share/polar_wind3d.conf
+	  (1.4), share/surfi_2d1.conf (1.4), share/surfi_2d1.conf2p (1.3),
+	  share/surfi_2d1.conf3p (1.3), share/surfi_2d1.conf4p (1.3),
+	  share/surfi_3d.conf4p (1.2), share/time_spec_beam2d.conf (1.9),
+	  share/vortices2d.conf (1.11), share/vortices2d_alpha.conf (1.7),
+	  share/vortices3df.conf (1.5), share/vortices3di.conf (1.5),
+	  share/vortices3dp.conf (1.5), share/wave_guide3d.conf (1.8),
+	  share/templates/Backgrd.conf (1.3), share/templates/Beam.conf
+	  (1.3), share/templates/Diagnostics.conf (1.2),
+	  share/templates/DrivenBackgrd.conf (1.2),
+	  share/templates/Hdf.conf (1.2),
+	  share/templates/NumberGenerator.conf (1.3),
+	  share/templates/PicSim.conf (1.2),
+	  share/templates/PoissonBoltzmannSolver.conf (1.2),
+	  share/templates/PotentialProbe.conf (1.2),
+	  share/templates/Scheduler.conf (1.3),
+	  share/templates/Spectra.conf (1.3), src/backgrd.cpp (1.106),
+	  src/backgrd.h (1.69), src/bbeam.cpp (1.7), src/bbeam.h (1.2),
+	  src/beam.cpp (1.123), src/beam.h (1.70), src/diagnostics.cpp
+	  (1.160), src/diagnostics.h (1.104), src/drivenbackgrd.cpp (1.80),
+	  src/drivenbackgrd.h (1.42), src/drivennonhombackgrd.cpp (1.2),
+	  src/drivennonhombackgrd.h (1.2), src/generic-es-picsim.cpp
+	  (1.12), src/generic-es-picsim.h (1.18), src/generic-picsim.cpp
+	  (1.58), src/generic-picsim.h (1.48), src/moments-handler.cpp
+	  (1.15), src/moments-handler.h (1.6), src/moments.cpp (1.29),
+	  src/moments.h (1.14), src/nonhombackgrd.cpp (1.14),
+	  src/nonhombackgrd.h (1.6), src/pdf.cpp (1.75), src/pdf.h (1.49),
+	  src/phase-space-handler.cpp (1.22), src/phase-space-handler.h
+	  (1.16), src/phase-space.cpp (1.50), src/phase-space.h (1.31),
+	  src/picsim-debug.h (1.5), src/picsim-defs.h (1.58),
+	  src/picsime.cpp (1.48), src/picsime.h (1.25), src/picsimei.cpp
+	  (1.16), src/picsimei.h (1.4), src/picsimi.cpp (1.72),
+	  src/picsimi.h (1.26), src/probes-handler.cpp (1.14),
+	  src/probes-handler.h (1.6), src/probes.cpp (1.34), src/probes.h
+	  (1.31), src/range-spec.h (1.5), src/scheduler.cpp (1.98),
+	  src/scheduler.h (1.92), src/species-factory.h (1.16),
+	  src/species-handler.cpp (1.48), src/species-handler.h (1.33),
+	  src/species.cpp (1.183), src/species.h (1.129),
+	  src/spectra-handler.cpp (1.11), src/spectra-handler.h (1.5),
+	  src/spectra.cpp (1.74), src/spectra.h (1.53),
+	  src/surface-handler.cpp (1.24), src/surface-handler.h (1.13),
+	  src/surface.cpp (1.45), src/surface.h (1.24), tests/Blitz.cpp
+	  (1.29), tests/Deque.cpp (1.17), tests/FactorySpecies.cpp (1.7),
+	  tests/Fftw.cpp (1.12), tests/List.cpp (1.17), tests/Map.cpp
+	  (1.17), tests/Pdf.cpp (1.34), tests/Picsim.cpp.in (1.36),
+	  tests/Slist.cpp (1.18), tests/Vector.cpp (1.17),
+	  tests/bench_container.sh.in (1.3), tests/benchmark (1.2),
+	  tests/kh2dgrowth.py.in (1.4), tests/kh2dgrowth.sh.in (1.3),
+	  tests/pdftest.m (1.14), tests/testMT1.cpp (1.2),
+	  tests/testMT2.cpp (1.2):
+	Updated header information.
+
+2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.111):
+	Bundled into version 2.0.0.
+
+2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/update-cl.sh (1.2), mudfas/doc/appendix.m (1.4),
+	  mudfas/doc/calctable.m (1.2), mudfas/doc/fun1_2d.m (1.2),
+	  mudfas/doc/fun1_3d.m (1.2), mudfas/doc/fun3_2d.m (1.2),
+	  mudfas/doc/fun3_3d.m (1.2), mudfas/doc/fun4_2d.m (1.2),
+	  mudfas/doc/fun4_3d.m (1.2), mudfas/doc/fun5_2d.m (1.2),
+	  mudfas/doc/fun5_3d.m (1.2), mudfas/doc/fun6_2d.m (1.2),
+	  mudfas/doc/fun6_3d.m (1.2), mudfas/doc/fun7_2d.m (1.2),
+	  mudfas/doc/fun7_3d.m (1.2), mudfas/doc/fun8_2d.m (1.2),
+	  mudfas/doc/fun8_3d.m (1.2), mudfas/doc/plotEfield.m (1.2),
+	  mudfas/doc/plotEfield3d.m (1.2), mudfas/doc/plotd2d.m (1.2),
+	  mudfas/doc/plotd3d.m (1.2), mudfas/doc/plotphi.m (1.2),
+	  mudfas/doc/plotphi3d.m (1.2), mudfas/doc/poisson.tex (1.9),
+	  mudfas/doc/solver2d_def.m (1.3), mudfas/doc/solver3d_def.m (1.3),
+	  mudfas/doc/startup.m (1.2), mudfas/doc/test1.m (1.2),
+	  mudfas/doc/test3.m (1.2), mudfas/doc/test4.m (1.2),
+	  mudfas/doc/test5.m (1.2), mudfas/doc/test6.m (1.2),
+	  mudfas/doc/test7.m (1.2), mudfas/doc/test8.m (1.2),
+	  mudfas/doc/testall.m (1.2), mudfas/matlab/MGFAS2D.cpp (1.7),
+	  mudfas/matlab/MGFAS3D.cpp (1.5), mudfas/matlab/Ne2d.m (1.7),
+	  mudfas/matlab/Ne3d.m (1.6), mudfas/matlab/Te2d.m (1.5),
+	  mudfas/matlab/Te3d.m (1.5), mudfas/matlab/adjmd2.m (1.5),
+	  mudfas/matlab/adjmd3.m (1.4), mudfas/matlab/calcnmudpack.m (1.3),
+	  mudfas/matlab/check_fun8_2d.m (1.3),
+	  mudfas/matlab/check_fun8_3d.m (1.4), mudfas/matlab/fmg2d.m (1.5),
+	  mudfas/matlab/fmg3d.m (1.5), mudfas/matlab/fun10_2d.m (1.4),
+	  mudfas/matlab/fun11_2d.m (1.2), mudfas/matlab/fun1_2d.m (1.2),
+	  mudfas/matlab/fun1_3d.m (1.2), mudfas/matlab/fun2_2d.m (1.2),
+	  mudfas/matlab/fun2_3d.m (1.2), mudfas/matlab/fun3_2d.m (1.2),
+	  mudfas/matlab/fun3_3d.m (1.2), mudfas/matlab/fun4_2d.m (1.3),
+	  mudfas/matlab/fun4_3d.m (1.3), mudfas/matlab/fun5_2d.m (1.2),
+	  mudfas/matlab/fun5_3d.m (1.2), mudfas/matlab/fun6_2d.m (1.4),
+	  mudfas/matlab/fun6_3d.m (1.2), mudfas/matlab/fun7_2d.m (1.2),
+	  mudfas/matlab/fun7_3d.m (1.2), mudfas/matlab/fun8_2d.m (1.2),
+	  mudfas/matlab/fun8_3d.m (1.3), mudfas/matlab/fun9_2d.m (1.2),
+	  mudfas/matlab/initpde2.m (1.3), mudfas/matlab/initpde3.m (1.3),
+	  mudfas/matlab/lop2d.m (1.3), mudfas/matlab/lop3d.m (1.3),
+	  mudfas/matlab/mg2d.m (1.5), mudfas/matlab/mg3d.m (1.5),
+	  mudfas/matlab/mgfas2d.m (1.4), mudfas/matlab/mgfas3d.m (1.4),
+	  mudfas/matlab/nlF.m (1.5), mudfas/matlab/nldF.m (1.5),
+	  mudfas/matlab/plot2dUF.m (1.5), mudfas/matlab/plot3dUF.m (1.5),
+	  mudfas/matlab/plotdefect2d.m (1.4), mudfas/matlab/plotdefect3d.m
+	  (1.4), mudfas/matlab/prolon1.m (1.3), mudfas/matlab/prolon2.m
+	  (1.3), mudfas/matlab/prolon3.m (1.3), mudfas/matlab/res2.m (1.3),
+	  mudfas/matlab/res3.m (1.3), mudfas/matlab/resu2.m (1.3),
+	  mudfas/matlab/resu3.m (1.3), mudfas/matlab/smooth2d.m (1.3),
+	  mudfas/matlab/smooth3d.m (1.3), mudfas/matlab/solver2d_def.m
+	  (1.5), mudfas/matlab/solver3d_def.m (1.5),
+	  mudfas/matlab/solver_const.m (1.6),
+	  mudfas/matlab/solver_par_parsing.m (1.3), mudfas/matlab/swk2.m
+	  (1.3), mudfas/matlab/swk3.m (1.3), mudfas/matlab/trsfc2.m (1.3),
+	  mudfas/matlab/trsfc3.m (1.3), mudfas/matlab/view_solver.m (1.4),
+	  mudfas/src/boundary.h (1.13), mudfas/src/init.cpp (1.53),
+	  mudfas/src/linear-solver.cpp (1.25), mudfas/src/linear-solver.h
+	  (1.15), mudfas/src/mudfas-defs.h (1.46), mudfas/src/mudfas.cpp
+	  (1.99), mudfas/src/mudfas.h (1.102),
+	  mudfas/src/nonlinear-solver.cpp (1.25),
+	  mudfas/src/nonlinear-solver.h (1.15),
+	  mudfas/src/poisson-boltzmann.cpp (1.73),
+	  mudfas/src/poisson-boltzmann.h (1.45), mudfas/src/poisson.cpp
+	  (1.29), mudfas/src/poisson.h (1.25), mudfas/src/prolon.cpp
+	  (1.21), mudfas/src/restrict.cpp (1.29), mudfas/tests/Blitz.cpp
+	  (1.12), mudfas/tests/Integrate.cpp (1.23),
+	  mudfas/tests/Parser.cpp (1.35), mudfas/tests/TestSolver.cpp
+	  (1.10), mudfas/tests/bench-solver.sh (1.2), mudfas/tests/blitz1.m
+	  (1.2), mudfas/tests/test-solver.h (1.19):
+	Updated header information.
+
+2010-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/mpi_test.conf24p (1.1), share/mpi_test.conf48p (1.1):
+	Added MPI test config for 24 and 48 cpu's.
+
+2010-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* share/mpi_test.conf16p (1.5), share/mpi_test.conf1p (1.8),
+	  share/mpi_test.conf2p (1.5), share/mpi_test.conf32p (1.1),
+	  share/mpi_test.conf3p (1.5), share/mpi_test.conf4p (1.7),
+	  share/mpi_test.conf64p (1.1), share/mpi_test.conf8p (1.5):
+	Changed density of particles (lambda) to 192 and added two new tests for 32
+	and 64 cpu's.
+
+2010-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.110):
+	Updated email address to Gmail address.
+
+2010-11-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.118):
+	Updated email address to gmail address.
+
+2010-01-13  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.72):
+	Added comment on tn the way stdTe relates to the width parameter of the
+	temperature profile.
+
+2010-01-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsimi.cpp (1.71):
+	Run astyle with style=stroustrup.
+
+2010-01-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsimi.cpp (1.70):
+	Added (in comment) code to iterate once when solving Poisson equation with
+	initial field solution is set to zero.
+
+2009-10-13  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/appendix.m (1.3), mudfas/doc/poisson.tex (1.7):
+	Grouped tables of grid points by 200 in 8 tables up to n=3219.
+
+2009-10-12  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/doxygen/Doxyfile.in (1.2):
+	Updated doxygen configuration input file to version 1.6.1.
+
+2009-10-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/poisson.tex (1.6):
+	Added Tables with multigrid setup up to n=1459
+
+2009-10-05  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.71):
+	Added ascii outputs for electron temperature and unperturbed density fields
+	on finest grid.
+
+2009-10-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.13), src/nonhombackgrd.h (1.5):
+	Added new injection coefficients (variable injectNHCoef) for processing
+	the non homogeneous component of the particle distribution.
+	This is done by substracting the homogeneous (or unperturbed) component
+	estimate per cell (variable numInjectHomPerCellStat).
+
+2009-09-21  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.117):
+	Updated to version 2.0.b2 and tag new version.
+
+2009-09-21  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* lib/Makefile.am (1.18), src/Makefile.am (1.46),
+	  src/drivennonhombackgrd.cpp (1.1), src/drivennonhombackgrd.h
+	  (1.1), src/species-factory.h (1.15):
+	Added support for species with non homogeneous density given by a model on
+	a grid and time driven perturbation input at boundaries (class name
+	DrivenNonHomBackgrd).
+
+2009-09-20  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.12):
+	Fixed bug in the way the particle position was accounted (end up always in
+	the first element!).
+	Use systematically iterator to initialise ibndy in members
+	fixBoundaryParticles() and injectParticles().
+
+2009-09-18  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.11):
+	Fixed bug when counting particles outside boundary face (member variables
+	LossAtLB and LossAtUB could be accessed outside range of validity!).
+	Replaced access to ibndy from operator() to iterator.
+	Added quick and dirty trick to test pulse-like perturbation.
+
+2009-09-18  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.182):
+	Fixed ambiguous conditional preprocessor syntax for macro BZ_DEBUG.
+
+2009-09-18  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.70):
+	Small cosmetic change in the printOn member of the class.
+
+2009-09-17  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.10):
+	Changed initialisation of numInjectPerCellAtLB and numInjectPerCellAtUB in
+	a single loop using dimension permutation.
+
+2009-09-17  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.116):
+	Updated to version 2.0.b1 and tag new version.
+
+2009-09-17  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.109):
+	Updated to version 2.0.b1 and tag new version.
+
+2009-09-16  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.74):
+	Added stdout report when random number is equal or larger than upper
+	boundary in uniform() member function.
+
+2009-09-16  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.9):
+	Sketch for computing numInjectPerCellAtLB and numInjectPerCellAtUB in a
+	single loop using a dimension permutation trick.
+
+2009-09-16  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.8):
+	Added temporary debugging information.
+	Added using statements for cout and endl.
+
+2009-09-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.7):
+	Fixed upper and lower boundaries a and b for perpendicular direction
+	in member function injectParticles().
+
+2009-09-15  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.69):
+	Added whether member nhmFilename is not empty to take into acccount the
+	relative density described by the arrays mgDens.
+	Fixed bug when initialising srcSize and dstSize by using shape() instead of
+	size() member function.
+	Fixed calculation of rDest and I in interpolate() member function.
+
+2009-09-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.68),
+	  mudfas/src/poisson-boltzmann.h (1.44):
+	Draft core for non homogeneous density given by a model on a grid and
+	interpolated for the multigrid method.
+
+2009-09-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.6):
+	Fixed memory allocation for array with cell-centred relative density.
+
+2009-09-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.5), src/nonhombackgrd.h (1.4):
+	Added member array for cell-centred relative density to use to calculate
+	initial particles per cell and particles to inject per cell.
+
+2009-09-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.4):
+	Fixed a bug in member injectParticles when setting up the upper limit for
+	the direction perpendicular to the boundary.
+
+2009-09-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.3):
+	Draft core for member functions fixBoundaryParticles and injectParticles.
+
+2009-09-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.h (1.3):
+	Added member variables to keep track of lost particles at boundaries.
+
+2009-09-10  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsim-defs.h (1.57):
+	Added new integer tiny vector with DIMR-1 to access boundary arrays.
+
+2009-09-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/nonhombackgrd.cpp (1.2), src/nonhombackgrd.h (1.2):
+	Fixed bug in calculation of numInjectPerCellAtLB and numInjectPerCellAtUB
+	(lambda*dV already accounted in numParticlesPerCell).
+	Added member function fixBoundaryParticles to handle non homogeneous
+	density at boundary.
+
+2009-09-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.h (1.128):
+	Promote member function fixBoundaryParticles() to virtual protected member
+	function so it can be redefined in derived class NonHomBackgrd.
+
+2009-09-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.181), src/species.h (1.127):
+	Replaced type mudfas::Array2dr and mudfas::Array2dr by unique type
+	Species::Field.
+
+2009-09-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas-defs.h (1.45):
+	Added new type integer iField with dim DIM.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* lib/Makefile.am (1.17), src/Makefile.am (1.45),
+	  src/nonhombackgrd.cpp (1.1), src/nonhombackgrd.h (1.1),
+	  src/species-factory.h (1.14):
+	Added support for species with non homogeneous density given by a model on
+	a grid (*draft* class NonHomBackgrd).
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/backgrd.cpp (1.105), src/bbeam.cpp (1.6), src/beam.cpp
+	  (1.122), src/drivenbackgrd.cpp (1.79):
+	Removed unecessary initialisation of variable df (time increment) since it
+	is already done in the abstract base class Species.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/particles_mover.m (1.4):
+	Added support for non homogeneous external magnetic field.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/particles_to_rho.m (1.5):
+	Added debugging report.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/mirrorMachine.m (1.1), matlab/picsim_init4_2d.m (1.3):
+	Added support for non homogeneous external magnetic field (mirror machine
+	type).
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/tracer_init.m (1.4):
+	Added parametrised selection of particle tracing.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/particles_tracer.m (1.4):
+	Cosmetic changes to plotting.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/picsim2d.m (1.7), matlab/picsim3d.m (1.7):
+	Added code to support particle tracing.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/phi_to_efield.m (1.5):
+	Embed solver constant in a structure.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/scheduler2d_def.m (1.4), matlab/scheduler3d_def.m (1.4):
+	Added default values for particle tracer and external magnetic field types.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/scheduler_par_parsing.m (1.4):
+	Parse tracer and external magnetic field type.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/solver_init.m (1.5):
+	Embed solver constant in a structure.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/matlab/solver_const.m (1.5):
+	Embed solver constants in a structure.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/backgrd_par_parsing.m (1.4):
+	Parse boundary condition.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/backgrd_init.m (1.4):
+	Cosmetic change.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/backgrd_def.m (1.5):
+	Typo fix.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/backgrd_bnd.m (1.5):
+	Cosmetic change
+	Fix of the condition on the lower boundary to strictly less than rmin.
+
+2009-09-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/read_nhbgrd_model.m (1.1), matlab/write_nhbgrd_model.m
+	  (1.1):
+	Functions to save and load ascii files to be used by the nonhomegeneous
+	density species class.
+
+2009-09-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.73), src/pdf.h (1.48):
+	Added random number generator for linear distribution given by endpoints.
+
+2009-09-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/randlin.m (1.1):
+	Linear random number generator.
+
+2009-06-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.108), configure.ac (1.115):
+	Added call to set up directory `m4' as an additional local Autoconf macro
+	directory.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/picsim_init4_2d.m (1.2):
+	Added option for scheduler.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/beam_init.m (1.5):
+	Fixed flux3 function to randflux function.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/phi_to_efield.m (1.4):
+	Fixed use of mudfas constants.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/picsim_init4_2d.m (1.1), matlab/picsim_init4_3d.m (1.1):
+	New configuration files for non uniform magnetic field.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/picsim2d.m (1.6), matlab/picsim3d.m (1.5),
+	  matlab/picsim_init1_2d.m (1.4), matlab/picsim_init1_3d.m (1.4),
+	  matlab/picsim_init2_2d.m (1.4), matlab/picsim_init2_3d.m (1.4),
+	  matlab/picsim_init3_2d.m (1.4), matlab/picsim_init3_3d.m (1.4):
+	Moved scheduler parsing and initialisation from picsim2d/picsim3d functions
+	into the specific configuration files picsim_init*.m.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/backgrd_bnd.m (1.4), matlab/beam_bnd.m (1.4):
+	Fixed flux3 function to randflux function.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/solver_init.m (1.4):
+	Fixed mudfas constant definition.
+
+2009-05-01  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/startup.m (1.4):
+	Corrected path to matlab version of mudfas included with picsim.
+
+2009-04-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* matlab/dipoleMagneticEquiPotential.m (1.1),
+	  matlab/dipoleMagneticField.m (1.1),
+	  matlab/dipoleMagneticPotential.m (1.1):
+	Functions to calculate magnetic dipole field and potential.
+
+2009-03-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/phase-space.cpp (1.49):
+	Fixed calculation of index in configuration space using correct lower
+	boundary rstart and correct current simulation time.
+
+2009-03-02  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/diagnostics.cpp (1.159), src/phase-space.cpp (1.48),
+	  src/phase-space.h (1.30):
+	Added code to make use of the `speed' option when computing the phase space
+	distribution.
+
+2009-01-09  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.114):
+	Updated to version 1.4.4 and tag new version.
+
+2009-01-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/species.cpp (1.180): Fixed subtle bug of an uninitialised variable for interpolated field that could cause serious trouble in 2.5D.
+
+2009-01-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.113): Updated to version 1.4.3 and tag new version.
+
+2009-01-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.107):
+	Updated to version 1.2.4 and tag new version.
+
+2009-01-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/doc/appendix.m (1.2):
+	Added code to calculate triplet (n,p,k) with n up to 1459.
+
+2009-01-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/poisson-boltzmann.cpp (1.67):
+	Fixed bug in setting x-Gaussian temperature profile, y-Gaussian was set.
+
+2008-10-30  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.72), src/pdf.h (1.47):
+	Cosmetic fixes.
+
+2008-10-30  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.71), src/pdf.h (1.46):
+	Added code to support dynamic creator RNG. Each cpu has its own independent
+	RNG and all the pdfs are calculated from the uniform over [0,1) rng member.
+	This old code is still available by undef DYNAMIC_CREATOR.
+
+2008-08-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.112): Check for sed is needed to generate tests/Picsim*.cpp from template file.
+
+2008-07-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/matlab/fun11_2d.m (1.1):
+	Added test case with data from dust2 paper (dust4_2dn6.mat).
+
+2008-07-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.111):
+	Updated to version 1.4.2.
+
+2008-07-23  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* tests/Makefile.am (1.51), tests/testMT1.cpp (1.1),
+	  tests/testMT2.cpp (1.1):
+	Added new tests of independent states of Mersenne Twister rng.
+
+2008-07-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.109):
+	Updated to version 1.4.1.
+
+2008-07-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.105):
+	Updated to version 1.2.3.
+
+2008-07-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.104), configure.ac (1.108):
+	Removed unecessary program and other C tests.
+	Simplified header tests with new macros.
+
+2008-07-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/tests/test-solver.h (1.18):
+	Added macro definition for MAX_VAR_DIMS and MAX_NC_NAME when necessary, as
+	it is the case in Fedora 9 (hdf-4.2r3-2.fc9.i386).
+
+2008-07-22  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/init.cpp (1.52):
+	Added parenthesis that triggered a warning for ambiguous statement.
+
+2008-05-29  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/init.cpp (1.51), src/spectra.cpp (1.73),
+	  src/surface.cpp (1.44):
+	Moved using blitz::tensor statements within the functions where used.
+
+2008-04-16  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.103), configure.ac (1.107):
+	Removed option to enable thread safety Blitz since it is now included in
+	the AC_CHECK_BLITZ macro.
+
+2008-04-14  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsimi.cpp (1.69), src/scheduler.cpp (1.97),
+	  src/species-factory.h (1.13), src/species-handler.cpp (1.46):
+	Fixed cout stream format manipulators.
+
+2008-04-14  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/tests/Integrate.cpp (1.22):
+	Removed useless cout.width() statement since it set the width to only the
+	next insertion and width is reset to zero.
+
+2008-04-14  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.98):
+	Fixed stream format manipulator.
+
+2008-04-11  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/tests/TestSolver.cpp (1.9), tests/Pdf.cpp (1.33),
+	  tests/Picsim.cpp.in (1.35):
+	Removed useless cout.width() statement since it set the width to only the
+	next insertion and width is reset to zero.
+
+2008-02-12  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsime.cpp (1.47), src/picsimei.cpp (1.15), src/picsimi.cpp
+	  (1.68):
+	Added test of solver's iguess flag before setting Phi to zero.
+
+2008-02-12  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.97):
+	Fixed boolean conditional statement (iguess==0 into !iguess).
+
+2008-02-12  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.96), mudfas/src/mudfas.h (1.101):
+	Added query method for initial guess flag.
+
+2008-02-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/Makefile.am (1.11):
+	Added target update-cl to update ChangeLog file.
+
+2008-02-07  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas.cpp (1.95):
+	Fixed a bug in the LUT for kcycle. V and W cycle were swapped.
+
+2007-09-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* configure.ac (1.106):
+	Added option --enable-threadsafe to turn on Blitz thread-safety features
+	by defining the BZ_THREADSAFE macro.  If enabled, code will look for pthreads,
+	OpenMP thread support to implement mutex locking of sensitive variables.
+
+2007-09-26  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/configure.ac (1.101):
+	Added option --enable-threadsafe to turn on Blitz thread-safety features
+	by defining the BZ_THREADSAFE macro.  If enabled, code will look for pthreads,
+	OpenMP thread support to implement mutex locking of sensitive variables.
+
+2007-09-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/scheduler.h (1.91):
+	Moved include statement for <parser.h> after <picsim-defs.h> to ensure
+	correct declaration statements.
+
+2007-09-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/picsim-defs.h (1.56):
+	Added template operator<< for std::vector<T> before include <parser.h> to
+	ensure declaration/definition for use in class Any.
+
+2007-09-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* mudfas/src/mudfas-defs.h (1.44), mudfas/src/mudfas.h (1.100):
+	Moved include statement for <parser.h> from <mudfas.h> to <mudfas-defs.h>.
+
+2007-05-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* Makefile.am (1.12):
+	More cvs2cl target fix.
+
+2007-05-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* Makefile.am (1.11):
+	Fixed cvs2cl target.
+
+2007-05-08  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/beam.cpp (1.121):
+	Fixed parser type declaration for member timeSpec.
+
+2006-08-28  Patrick Guio <patrick.guio@matnat.uio.no>
+
+	* ChangeLog (1.1), ChangeLog.0 (1.319), update-cl.sh (1.1):
+	Moved manually filled in ChangeLog into ChangeLog.0.
+	Added script to fill in ChangeLog.
+
+2006-08-28  Patrick Guio <patrick.guio@matnat.uio.no>
+
+	* mudfas/ChangeLog (1.1), mudfas/ChangeLog.0 (1.164),
+	  mudfas/update-cl.sh (1.1):
+	Moved manually filled in ChangeLog into ChangeLog.0.
+	Added script to fill in ChangeLog using cvs2cl.
+

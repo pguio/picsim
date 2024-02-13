@@ -1,0 +1,1567 @@
+
+Thu Aug 24 14:00:36 CEST 2006 Patrick Guio <patrick.guio@matnat.uio.no>
+
+	* src/moments.cpp src/phase-space.cpp:
+	Fixed ambiguous variable type for initialisation of start, end and stride.
+
+	* src/diagnostics.cpp src/diagnostics.h:
+	Temporary fix to new hdf-interface API.
+
+
+Mon Aug 21 14:43:59 CEST 2006 Patrick Guio <patrick.guio@matnat.uio.no>
+
+	* configure.ac:
+	Updated to autoconf 2.60.
+
+Tue Jul  5 18:08:03 CEST 2005 Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/diagnostics.cpp src/diagnostics.h: Propagated changes done on
+	  the HDF interface.
+
+	* new tag: cvs tag -R picsim_1_4_0
+
+Fri Jun 17 18:19:12 CEST 2005 Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/backgrd.cpp src/bbeam.cpp src/beam.cpp src/diagnostics.cpp
+	src/drivenbackgrd.cpp src/moments-handler.cpp src/moments.cpp
+	src/phase-space-handler.cpp src/phase-space.cpp src/picsim-debug.h
+	src/picsim-defs.h src/probes-handler.cpp src/probes.cpp
+	src/scheduler.cpp src/scheduler.h src/species-factory.h
+	src/species-handler.cpp src/spectra-handler.cpp src/spectra.cpp
+	src/surface-handler.cpp src/surface.cpp: Replaced post-increment
+	operator i++ by pre-increment operator ++i for integral and iterator
+	types wherever possible as faster (from C++ FAQ).
+
+Thu Jun 16 11:08:25 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species.cpp: 
+	Stylistic change from (*ptr).data to ptr->data.
+	Replaced i++ by ++i for integral and iterator types wherever
+	possible as faster (from C++ FAQ).
+
+
+Tue Jun 14 11:53:46 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/backgrd.cpp src/drivenbackgrd.cpp: 
+	Stylistic change from (*ptr).data to ptr->data.
+	Protected injection of particles outside the simulation domain (perp.
+	direction to a face).
+	* src/pdf.cpp: Fixed a bug in method uniform(a,b) and
+	perturb(a,b,m,s,alpha) that allowed to draw a
+	number in the range [a,b] instead of [a,b) when a==b.
+	Added exception when a>b.
+	* src/phase-space.cpp: Added explicit integer cast after floor'ing.
+
+Thu Jun  2 18:02:23 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/diagnostics.cpp: Fixed a bug in saveEnergies() member function when
+	resizing start and edge variables, should be resized to 2 (time vatiables
+	and number of species variables) and not species number!
+
+Sun May 22 12:02:57 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species-factory.h: Register species class BBeam in the factory.
+	* src/bbeam.cpp: Removed unecessary constant definitions.
+
+	* new tag: cvs tag -R picsim_1_3_2
+
+	* src/bbeam.cpp src/beam.cpp: Adjusted particle injection when beam direction 
+	is outside the simulation in 2R3V and free_space boundary conditions.
+
+
+Sat May 21 15:48:50 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/phase-space.cpp: 
+	Fixed calculation of the phase space index to avoid upper limit leakage by
+	using C++ std::floor() function.
+	* src/picsim-defs.h src/scheduler.h:
+	Changed external magnetic field vector dimension to DIMV instead of DIMR 
+	as it was to allow B vector outside the simulation plane for 2R3V simulations.
+	* src/bbeam.cpp src/bbeam.cpp: 
+	Extended capabilities for beam direction outside the simulation plane
+	for 2R3V simulations.
+	Added exception handling when beamDir not one of x-, y- or z-axis.
+
+	* new tag: cvs tag -R picsim_1_3_1
+
+
+Fri May 20 13:08:51 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/beam.h src/beam.cpp: 
+	Renamed *beamXseff* variables into *beamWidth* variables. 
+	Removed variable seffCof. Added new protected method initialiseParticles()
+	to separate the initialisation of the particles from the initialisation of
+	the beam properties. 
+	Renamed options "beamdir", "beampos" and "seff" into "dir", "pos" and "width". 
+	Added private variable beamInitDepthTime. 
+	Added new protected method getBeamArea() to calculate beam effective area
+	in the direction perpendicular to the beam direction.
+	Simplified the code to correct for gravitation effect.
+	* src/bbeam.h src/bbeam.cpp: New species derived from Beam species which is a 
+	Background species with a spatial "beam" distribution.
+	* lib/Makefile.am src/Makefile.am: Added src/bbeam.h src/bbeam.cpp.
+
+	* new tag: cvs tag -R picsim_1_3_0
+
+	* src/backgrd.cpp src/drivenbackgrd.cpp src/moments.cpp
+	src/phase-space.cpp src/probes.cpp src/scheduler.cpp src/species.cpp
+	src/spectra.cpp src/surface.cpp: Commented unused strings that define
+	the type of parsed values.
+
+
+Tue Apr 19 13:57:23 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* doc/picsim.tex: Fixed title. Updated LaTeX style.
+
+Sat Apr  2 20:03:24 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/diagnostics.cpp src/moments-handler.cpp src/moments-handler.h
+	src/moments.cpp src/moments.h: Fixed zeroth-order moment (density) 
+	calculation to be normalised with rhoFactor.
+	* src/beam.cpp: Changed the definition of the beam density. The 
+	number of beam particles is such that the beam density is the maximum 
+	one calculated on the Poisson solver grid.
+	* src/moments.cpp: Fixed unit volume for moment estimate.
+
+Thu Mar 31 11:34:22 CEST 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species.cpp src/species.h: Removed member function erfinv.
+
+Wed Mar 30 12:21:35 CEST 2005 Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* matlab/beam_test_seff1d.m: Commented and cleaned code.
+
+Wed Mar 23 12:18:21 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* matlab/beam_test_seff1d.m: Added first-order interpolation stuff.
+
+Tue Mar 22 11:34:09 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* matlab/beam_test_seff1d.m: Added parameters to functions. Normalised
+	maximum density to the integrated pdf in the interval dx.
+	* src/beam.cpp: Work on the dimension of the x-section of the beam. 
+	Normalised maximum density to the integrated pdf in the interval dx with 
+	zeroth-order interpolation. Rounded correctly number of particles.
+	* src/backgrd.cpp: Rounded correctly number of particles.
+
+
+Fri Mar 11 13:45:08 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/beam.cpp: Force beam behaviour even when mean drift velocity 
+	is zero. 
+	* matlab/beam_test_seff1d.m: New file.
+
+
+Thu Mar 10 16:59:39 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/phase-space.cpp src/phase-space.h: Moved all member function
+	definitions out of the class declaration.
+	* src/moments.cpp src/moments.h: Moved all member function 
+	definitions out of the class declaration. Fixed bug in gridSize 
+	calculation. Added density calculation.
+	* src/diagnostics.cpp: Added density diagnostic for class Moments.
+	* share/drift3d.conf4p: New file.
+	* src/species-handler.cpp src/species-handler.h: Moved all member 
+	function out of the class declaration.
+	* src/species.cpp src/species.h: Moved all member function out of the
+	class declaration.
+
+Tue Mar  8 15:42:12 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/picsimi.cpp: Fixed diagnostic handling when no electrostatic force.
+	* share/beam3d_test1.conf: New file.
+	* share/beam3d_test2.conf: New file.
+	* src/beam.cpp: Force beamXSeff(beamDir)=1.0 to avoid division by zero.
+
+
+Thu Mar  3 14:57:48 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* drift3d.conf drift3d.conf3p: New files.
+
+
+Wed Mar  2 10:21:27 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* share/kh2d.conf: Renamed drift2d.conf.
+	* share/kh2d.conf3p: Renamed drif2d.conf3p.
+
+
+Fri Feb 25 15:14:55 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/beam.cpp: Added depth parameter check different from 0.0 to throw
+	exception.
+	* src/pdf.cpp: Replaced fabs calls by std::abs ones.
+	* src/species-handler.cpp: Fixed a bug in MPI version of species creation.
+	Removed C function strdup() references. Improve error message when throwing
+	exception in MPI version.
+	* share/kh2d.conf share/kh2d.conf3p: New files.
+	* src/beam.cpp: Replaced fabs() calls by std::abs() calls.
+	* src/beam.cpp: Fixed bug in assignement of sgn when u0==0.0.
+	Fixed bug in numParticles when u0==0.0.
+
+
+Wed Feb 23 15:35:33 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/pdf.cpp src/pdf.h: Created namespace pdf. Templatised class
+	NumberGenerator and compiled template for float and double. 
+	Removed dependencies on header picsim-defs.h. Added PDF_COPYRIGHT.
+	* src/generic-picsim.h src/species-handler.h src/species.h
+	tests/Pdf.cpp: Propagated new namespace pdf where necessary.
+
+
+
+Tue Feb 22 09:27:24 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species.cpp: Removed assignement of variable 'drift' to default value
+	in constructor since drift is parsed in Species base class constructor. 
+
+	* src/beam.cpp src/diagnostics.cpp src/diagnostics.h src/generic-es-picsim.cpp
+	src/generic-es-picsim.h src/moments.h src/phase-space.h src/picsime.cpp
+	src/picsime.h src/picsimei.cpp src/picsimei.h src/picsimi.cpp src/picsimi.h
+	src/scheduler.cpp src/scheduler.h src/species-handler.cpp src/species-handler.h
+	src/species.cpp src/species.h src/spectra.h src/surface-handler.h src/surface.cpp
+	src/surface.h: Fixed references to class belonging to the namespace mudfas. 
+	Changed MReal type into mudfas::real.
+
+	* new tag: cvs tag -R picsim_1_2_2
+
+	* src/phase-space.cpp: Fixed bug in the calculation of spaceDim due to round-off
+	error. Added a test to check whether stride is an integral times the distance
+	between start and end. Added the possibility to have start==end if integrate==yes.
+	Stylistic change from (*ptr).data to ptr->data.
+
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h src/diagnostics.cpp
+	src/diagnostics.h src/drivenbackgrd.cpp src/drivenbackgrd.h
+	src/generic-es-picsim.cpp src/generic-es-picsim.h src/generic-picsim.cpp
+	src/generic-picsim.h src/moments-handler.cpp src/moments-handler.h src/moments.cpp
+	src/moments.h src/pdf.cpp src/pdf.h src/phase-space-handler.cpp
+	src/phase-space-handler.h src/phase-space.cpp src/phase-space.h src/picsim-defs.h
+	src/picsime.cpp src/picsime.h src/picsimei.cpp src/picsimei.h src/picsimi.cpp
+	src/picsimi.h src/probes-handler.cpp src/probes-handler.h src/probes.cpp
+	src/probes.h src/range-spec.h src/scheduler.cpp src/scheduler.h
+	src/species-factory.h src/species-handler.cpp src/species-handler.h src/species.cpp
+	src/species.h src/spectra-handler.cpp src/spectra-handler.h src/spectra.cpp
+	src/spectra.h src/surface-handler.cpp src/surface-handler.h src/surface.cpp
+	src/surface.h tests/Picsim.cpp.in: Created namespace picsim. 
+
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h src/diagnostics.cpp
+	src/diagnostics.h src/drivenbackgrd.cpp src/drivenbackgrd.h
+	src/generic-es-picsim.cpp src/generic-picsim.h src/moments.cpp src/pdf.cpp
+	src/pdf.h src/phase-space.cpp src/picsim-defs.h src/picsimi.h src/probes.h
+	src/scheduler.cpp src/scheduler.h src/species-handler.cpp src/species-handler.h
+	src/species.cpp src/species.h src/spectra.cpp src/spectra.h src/surface.cpp
+	src/surface.h tests/Blitz.cpp tests/FactorySpecies.cpp tests/Fftw.cpp tests/Pdf.cpp:
+	Changed PReal type into picsim::real.
+
+
+Mon Feb 14 10:30:08 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* configure.ac: Added a first check for function sin in default library,
+	if not successfull try then in -lm.
+
+Wed Feb  9 13:04:40 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* configure.ac: Required automake 1.9. Added dist-bzip2.
+
+Sat Feb  5 18:33:46 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species-factory.h: Added second template parameter in
+	SpeciesFactory<AncestorType> to fix the case where ClassIDKey is not the
+	default template parameter.
+	Added a typedef for the type SpeciesFactory<AncestorType,ClassIDKey>.
+
+
+Fri Feb  4 14:44:44 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species-handler.h: Removed unused macro definition FACTORY.
+	* src/species-factory.h: Replaced 'int' cast to 'unsigned long' cast
+	to print the address of the base function to create. 
+	* src/species-handler.h: Removed constness of key type in std::map 
+	container (that didn't not make sense:-).
+
+Thu Feb  3 17:53:34 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species-factory.h tests/FactorySpecies.cpp: Replaced std::string exception
+	throw by a ClassException.
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h src/diagnostics.cpp
+	src/diagnostics.h src/drivenbackgrd.cpp src/drivenbackgrd.h src/moments.cpp
+	src/moments.h src/phase-space.cpp src/phase-space.h src/probes.cpp
+	src/probes.h src/species-factory.h src/species-handler.cpp src/species.cpp
+	src/species.h src/spectra.cpp src/spectra.h src/surface.cpp src/surface.h:
+	Replaced use of char* type by std::string.
+	* src/drivenbackgrd.cpp src/drivenbackgrd.h src/pdf.h: Added default parameters 
+	for Pdf class constructor.
+
+	* new tag: cvs tag -R picsim_1_2_1
+
+
+Sun Jan 30 13:39:57 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* tests/FactorySpecies.cpp tests/Pdf.cpp tests/Picsim.cpp.in:
+	Replaced catch of ParserException class by ClassException.
+	* configure.ac: Updated required autoconf 2.59. Updated version to version 1.2.
+
+	* new version 1.2.
+	* new tag: cvs tag -R picsim_1_2_0.
+
+
+Fri Jan 28 18:37:52 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/backgrd.cpp src/beam.cpp src/diagnostics.cpp src/drivenbackgrd.cpp
+	src/moments-handler.cpp src/moments.cpp src/pdf.cpp
+	src/phase-space-handler.cpp src/phase-space.cpp src/probes-handler.cpp
+	src/probes.cpp src/scheduler.cpp src/species-handler.cpp src/species.cpp
+	src/spectra-handler.cpp src/spectra.cpp src/surface-handler.cpp
+	src/surface.cpp: Replaced parseOptionInFileOnCmdLine calls to generic
+	parseOption member function.
+
+
+Mon Jan 24 11:53:16 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species.cpp: Fixed a typo (inteVect -> intVect).
+	* src/moments-handler.cpp src/phase-space-handler.cpp
+	src/probes-handler.cpp src/surface-handler.cpp: Fixed PARSE macro together
+	with MPI (which was copied from species-handler). All objects are on all
+	cpus but only masterProc needs to be parsed.
+	* src/generic-picsim.cpp: Propagated parsed value from masterProc to all
+	other cpus in PARSE macro together with MPI.
+	* src/species-handler.cpp src/species-handler.h: Cleaned code from
+	any references to specified species. The class SpeciesHandler only use the
+	class SpeciesFactory.
+	* tests/Picsim.cpp.in: Added clean call to MPI_Finalize() before exiting
+	when parsing help/version/create-template.
+
+Thu Jan 20 18:10:11 CET 2005  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/backgrd.h: Fixed typo in parser_enum last element.
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp: Added dummy empty
+	function definition in each species. These functions are to be inserted
+	in the member method init() of the factory class template so that 
+	static initialisation happens before the first call of that function in the
+	translation unit (see §3.6.2/3 of C++ standard).
+	* src/beam.cpp: Added default initialisation of drift to
+	DEFAULT_BEAM_DRIFT.
+	* src/species-factory.h: Removed alternative pointer type auto_ptr<type>.
+	It is not handled correclty with std::vector<auto_ptr<type>>.
+	Added exception if ClassIDKey not found when create() an object.
+	Added init() member method to handle correctly static initialisation.
+	Cosmetic changes in output of content() method.
+	* src/species-handler.cpp src/species-handler.h: Added support for species
+	class factory.
+	* tests/FactorySpecies.cpp: Added support for exception handling.
+	Worked out example.
+	* tests/Makefile.am: Added missing libs (pdf,parser) for FactorySpecies.
+
+
+Thu Dec 23 09:52:17 CET 2004  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* tests/FactorySpecies.cpp: New file to test the factory machinery 
+	for species.
+	* tests/Makefile.am: Added support for factory test.
+	* src/species-factory.h: Added type definition for pointer type:
+	either type* or auto_ptr<type> (requires macro AUTO_PTR to be
+	defined).
+
+
+Wed Dec 22 11:21:54 CET 2004  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* src/species-factory.h: Added factory iterator type declaration,
+	begin(), end() and getKey() member functions.
+	Added CPP macro protection against multi-inclusion.
+	Added public typedef dclaration for ClassIDKey.
+
+Tue Dec 14 20:10:17 CET 2004  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* doc/doxygen/Doxyfile.in: New file.
+	* configure.ac: Added doxygen support.
+	* src/species-factory.h: New file.
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp: Added factory
+	registration. Propagated refactoring changes in the parser stuff.
+	* src/backgrd.h: Added default values for constructor.
+	Propagated refactoring changes in the parser stuff.
+	* src/generic-picsim.h src/species.h src/scheduler.h src/surface.h: 
+	Propagated refactoring changes in the parser stuff.
+	* src/diagnostics.h: Propagated refactoring changes in the
+	hdf-interface stuff.
+	* src/spectra.h: Propagated refactoring changes in the fourier stuff.
+	* src/spectra.cpp: Propagated refactoring changes in the fourier and
+	parser stuff.
+	* src/diagnostics.cpp src/moments-handler.cpp src/moments.cpp
+	src/pdf.cpp src/phase-space-handler.cpp src/phase-space.cpp
+	src/probes-handler.cpp src/probes.cpp src/scheduler.cpp
+	src/species-handler.cpp src/species.cpp src/spectra-handler.cpp
+	src/surface-handler.cpp src/surface.cpp tests/Picsim.cpp.in:
+	Propagated refactoring changes in the parser stuff.
+
+
+Wed Sep 22 10:22:09 CEST 2004 Patrick Guio <patrick.guio@ii.uib.no>
+
+	* matlab/@sd/Makefile.am matlab/@single/Makefile.am: Removed.
+	* matlab/Makefile.am: Added dist target from matlab/@sd/Makefile.am and
+	matlab/@single/Makefile.am.
+	* configure.ac: Removed references to  matlab/@sd/Makefile and
+	matlab/@single/Makefile.
+	* lib/Makefile.am src/Makefile.am tests/Makefile.am: Updated to take into
+	account the files moved in mudfas/src/c++-tools.
+
+Mon Mar 22 09:15:52 CET 2004 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* m4: New directory containing m4 macros files that replace acinclude.m4.
+	* m4/ac_cxx_enable_64bits.m4 m4/ac_cxx_enable_debug.m4
+	m4/ac_cxx_enable_optimize.m4 m4/ac_cxx_enable_profile.m4
+	m4/ac_cxx_flags_preset.m4 m4/ac_cxx_lib_blitz.m4 m4/ac_env.m4 
+	m4/ac_lib_dxml.m4 m4/ac_lib_fftw.m4 m4/ac_lib_fftw3.m4 m4/ac_lib_hdf4.m4
+	m4/ac_lib_mlib.m4: New Files.
+	* Makefile.am configure.ac: Updated to use the new m4 macros in m4
+	directory.Small cosmetic fixes.
+	* makelinks.sh.in: Updated to link as well m4 macros in m4 directory.
+
+Tue Mar 16 16:40:17 CET 2004 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Replaced help string with AS_STRING_HELP calls. Fixed
+	AC_INIT and AM_INIT_AUTOMAKE.
+	* src/scheduler.h: Protected from several inclusion of PACKAGE_ variables.
+
+Mon Mar 15 10:05:42 CET 2004 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Replaced echo by AC_MSG_NOTICE calls. Added support for
+	header configuration AC_CONFIG_HEADERS.
+	* src/diagnostics.h src/generic-picsim.h src/picsim-defs.h src/scheduler.h
+	src/species.h: Added support for header configuration AC_CONFIG_HEADERS.
+
+Fri Feb 27 11:04:11 CET 2004 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Added support for FFTW3 via fourier.h.
+
+Wed Jan 21 12:41:41 CET 2004 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Updated library check for HDF stuff.
+	* src/generic-es-picsim.cpp src/generic-picsim.cpp: Added debugging
+	information at init.
+	* src/surface.cpp: Added constant default values DEFAULT_SURF_MIN and
+	DEFAULT_SURF_MAX.
+
+Tue Jun 17 15:49:59 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* src/species-handler.cpp src/species-handler.h: Replaced the 2 MPI_Gather
+	calls in getState by a 1 call and remove field for species particle number
+	and kinetic energy.
+	* src/species.cpp: Separate the 2 solutions for depositCharge().
+
+Thu Jun 12 16:46:16 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Replaced target SGI32/64 by SGI. Added --enable-64bit
+	for both CC and xlC.
+
+Wed May 28 14:40:18 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* src/beam.cpp src/beam.h: Moved constant default values DEFAULT_* from
+	beam.h into beam.cpp file. Added DEFAULT_BEAM_POS declaration.
+	* src/species.cpp src/species.h: Added private variable dt and dtOver2
+	to avoid repeated initialisation. Removed inline declaration for move?() and
+	deccel?() member functions.
+	* configure.ac: Added mpCC as a possible MPI C++ compiler.
+
+Tue May 27 17:39:53 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Added support for IBM/xlC.
+
+Thu May 22 15:41:11 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* src/moments.cpp: Removed precision loss process for lower boundary.
+	* src/species.cpp: Added clean precision loss process in depositCharge() and
+	fieldToParticle(). fieldToParticle() renamed interpolateField().
+
+Wed May 21 10:11:58 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* src/backgrd.cpp src/beam.cpp src/diagnostics.cpp src/drivenbackgrd.cpp
+	src/generic-es-picsim.cpp src/moments-handler.cpp src/moments.cpp src/pdf.cpp
+	src/phase-space-handler.cpp src/phase-space.cpp src/picsime.cpp 
+	src/picsimei.cpp src/picsimi.cpp src/probes-handler.cpp src/probes.cpp 
+	src/scheduler.cpp src/species-handler.cpp src/species.cpp  
+	src/spectra-handler.cpp src/spectra.cpp src/surface-handler.cpp 
+	src/surface.cpp tests/Picsim.cpp.in: Added #undef macros for macros ID and
+	PARSE.
+	* src/species.cpp src/species.h: Added member function dump() and
+	restore().
+	* src/species.cpp: Fixed a bug in depositCharge() member function (same
+	arithmetic precision problem as in the particle localisation in moments
+	calculation.
+
+Mon May 19 17:17:01 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+
+	* configure.ac: Updated configuration for SGI32/64 bits CC.
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h
+	src/diagnostics.cpp src/diagnostics.h src/drivenbackgrd.cpp
+	src/drivenbackgrd.h src/generic-picsim.cpp src/generic-picsim.h
+	src/generic-es-picsim.cpp src/generic-es-picsim.h src/moments-handler.cpp
+	src/moments-handler.h src/moments.cpp src/moments.h src/phase-space.cpp
+	src/phase-space.h src/phase-space-handler.cpp src/phase-space-handler.h
+	src/probes.cpp src/probes.h src/probes-handler.cpp src/probes-handler.h
+	src/scheduler.cpp src/scheduler.h src/species-handler.cpp
+	src/species-handler.h src/species.cpp src/species.h src/spectra.h
+	src/spectra.cpp src/spectra-handler.cpp src/spectra-handler.h
+	src/surface.cpp src/surface.h src/surface-handler.cpp
+	src/surface-handler.h src/pdf.cpp src/pdf.h: Moved to stricter ANSI C++
+	coding.
+	* src/generic-picsim.cpp src/generic-es-picsim.cpp src/moments-handler.cpp
+	src/phase-space-handler.cpp src/probes-handler.cpp src/species-handler.cpp
+	src/spectra-handler.cpp src/surface-handler.cpp: Fixed a bug in macro
+	PARSER(FUNC) that used only ParseHelp() instead of X. 
+
+Tue May 13 14:05:29 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.ac: Added support for HDF for IA64 by setting the macro IA64. 
+
+Mon May 12 10:51:55 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/moments.cpp src/moments.h: Changed the array of list of particles to
+	list of particles pointer which uses much less memory and unecessary
+	duplication of data.
+	* src/surface.cpp src/surface.h: Added support for cylindrical surface.
+
+Sat May  3 19:50:16 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp src/generic-picsim.cpp src/moments-handler.cpp
+	src/pdf.cpp src/phase-space-handler.cpp src/probes-handler.cpp
+	src/scheduler.cpp src/species-handler.cpp src/spectra-handler.cpp
+	src/surface-handler.cpp: Renamed title_header into header.
+	* tests/Picsim.cpp.in: Use the class Timer with user elapsed time.
+
+Tue Apr 15 15:21:37 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/moments.cpp src/moments-handler.cpp src/moments.h 
+	src/moments-handler.h: New files.
+	* lib/Makefile.am src/Makefile.am: Updated for new files.
+	* src/diagnostics.cpp src/diagnostics.h: Added support for moments
+	handler.
+	* src/picsime.cpp src/picsimei.cpp src/picsimi.cpp: Added support for
+	moments diagnostics.
+
+Mon Apr 14 09:35:00 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsim-defs.h src/pdf.h: Fixed Copyright and macros DIMR and DIMV
+	check.
+	* src/picsim-defs.h src/species-handler.cpp src/species-handler.h
+	src/species.h src/surface.h: Moved typedefs of list and iterators list of
+	classes inside the concerned classes and where necessary.
+	* src/phase-space.cpp src/phase-space.h src/diagnostics.cpp: Replaced
+	R- and V- variables by variables with dim=DIMR+DIMV.
+	* src/phase-space-handler.cpp src/probes-handler.cpp
+	src/spectra-handler.cpp src/surface-handler.cpp: Added emptyness test when
+	outputing the handler.
+	* src/picsim-defs.h src/species-handler.cpp: Added for MPI support
+	parameter to set number of cpus/species.
+	* src/scheduler.cpp src/scheduler.h tests/Picsim.cpp.in: Take into use the
+	Timer class from time-utils.h.
+	* src/picsim-debug.h: Make nicer output.
+	* src/picsim-defs.h: Define macro DIMRV as DIMR+DIMV.
+
+Fri Apr 11 11:55:52 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.ac: Added option -noimplicit_include for cxx compilers.
+	* src/range-spec.h: Added function toRange for RangeSpec<int>.
+	* src/diagnostics.cpp src/diagnostics.h src/probes.cpp src/probes.h
+	src/spectra.cpp src/spectra.h: Make use of the RangeSpec template wherever
+	needed.
+
+Thu Apr 10 14:47:20 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/beam.cpp src/diagnostics.cpp src/drivenbackgrd.cpp
+	src/generic-picsim.cpp src/pdf.cpp src/phase-space-handler.cpp
+	src/phase-space.cpp src/picsime.cpp src/picsimei.cpp src/picsimi.cpp
+	src/probes-handler.cpp src/probes.cpp src/scheduler.cpp
+	src/species-handler.cpp src/species.cpp src/spectra.cpp
+	src/surface-handler.cpp src/surface.cpp: Added macro ID to define $Id.
+	Removed use of `const char* id, version, copyright', use directly the
+	macros in registerPackage() call. Make use of Parser::setPrefix() where
+	necessary and change use of `:' by `::' in argument with a prefix base name.
+	* src/spectra-handler.cpp src/spectra-handler.h: New files.
+	* lib/Makefile.am src/Makefile.am: Updated.
+	* src/diagnostics.cpp src/diagnostics.h src/spectra.cpp src/spectra.h:
+	Modified to take in use the SpectraHandler class.
+	* src/phase-space-handler.h src/probes-handler.cpp src/probes-handler.h
+	src/species-handler.cpp src/species-handler.h src/surface-handler.cpp
+	src/surface-handler.h: Removed unecessary member function declarations.
+	Use directly const_iterator in friend function.
+
+Wed Apr  9 09:38:54 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsim-debug.h: New file containing the new macros to handle output of
+	variable when debugLevel() is present.
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp 
+	src/phase-space-handler.cpp src/phase-space.cpp src/picsim-defs.h
+	src/picsimi.cpp src/scheduler.cpp src/species-handler.cpp
+	src/species.cpp src/surface-handler.cpp src/surface.cpp: Replaced where
+	necessary code by macros for debugging output.
+	* src/potential-probes.cpp src/potential-probes.h: Renamed to
+	src/probes.cpp and src/probes.h
+	* lib/Makefile.am src/Makefile.am: Updated.
+	* src/probes-handler.cpp src/probes-handler.h: New files.
+	* src/range-spec.h: New file.
+
+Tue Apr  8 12:03:35 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp src/phase-space-handler.cpp src/phase-space.cpp
+	src/picsimi.cpp src/picsimie.cpp src/picsime.cpp src/species-handler.cpp
+	src/surface-handler.cpp src/surface.cpp: Fixed MPI code, especially output
+	should not be doubled.  Changed (void *) into static_cast<void>().
+	* src/diagnostics.h src/generic-es-picsim.h tests/Picsim.cpp.in: Added
+	simulation configuration output to <diagnosticfilename>.conf file.
+	* src/species-handler.cpp: Replaced MPI Send/Recv sequence by a MPI Reduce
+	call in SpeciesHandler::depositCharge() and SpeciesHandler::getAlfa(). 
+	Replaced MPI Send/Recv sequence by MPI Gather's calls in 
+	SpeciesHandler::getState().
+	* src/phase-space.cpp: Replaced MPI Send/Recv sequence by a MPI Reduce call
+	in PhaseSpace::computePhaseSpace().
+	* src/picsime.cpp src/picsimei.cpp src/picsimi.cpp: Removed use of buffer
+	in the MPI Bcast call when updating the potential Phi variable to every
+	process.
+	* src/picsim-defs.h: Added new macros to handle output of variable when
+	debugLevel() sufficent in a uniform way for MPI/non-MPI code.
+	* src/species.cpp: Replaced where necessary code by macros for debugging
+	output.
+
+Mon Apr  7 11:30:15 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp src/diagnostics.h src/generic-es-picsim.cpp
+	src/generic-picsim.cpp src/generic-picsim.h src/phase-space-handler.cpp
+	src/phase-space-handler.h src/phase-space.cpp src/phase-space.h
+	src/picsim-defs.h src/picsime.cpp src/picsimei.cpp src/picsimi.cpp
+	src/scheduler.cpp src/scheduler.h src/species-handler.cpp
+	src/species-handler.h src/species.cpp src/species.h src/surface-handler.cpp
+	src/surface-handler.h src/surface.cpp src/surface.h tests/Picsim.cpp.in: 
+	Removed old MPI support and replaced by the one integrated in the Parser
+	class.
+
+Sun Apr  6 16:29:11 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/pdf.cpp: Removed an unecessary contiguous cout statement.
+	* src/phase-space.h: Added member function PhaseSpace::dim(int d).
+	* src/diagnostics.cpp src/diagnostics.h: Moved included hdf-interface.h
+	after the phase-space-handler.h due to a macro collision Vend introduced 
+	by hdf headers. Initialise each PhaseSpace before initialise the
+	diagnostic.
+
+Fri Apr  4 09:46:33 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/phase-space-handler.cpp src/phase-space-handler.h
+	src/surface-handler.cpp src/surface-handler.h: Removed unecesssary
+	variable to count the number of objects in the list.
+	* src/species.cpp src/species.h: Fixed the constness of the
+	ParticleListIter when calling checkBoundary.
+
+Thu Apr  3 15:08:09 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp
+	src/phase-space-handler.cpp src/phase-space.cpp src/picsim-defs.h
+	src/scheduler.cpp src/species-handler.cpp src/species.cpp
+	src/species.h src/surface-handler.cpp src/surface.cpp: Removed unecessary
+	twice definition (with/without MPI) of debug output. Unified with the
+	manipulator debugHeader().
+	* src/backgrd.cpp src/backgrd.h: Added new parameter injectCoef to adjust
+	the number of particles injected on each side due to absorbing surface.
+	* src/diagnostics.cpp src/diagnostics.h src/phase-space.cpp src/phase-space.h
+	src/picsime.cpp src/picsimei.cpp src/picsimi.cpp src/species-handler.h: 
+	Removed member function getSpeciesList() in class SpeciesHandler. The 
+	preferred method is to provide the SpeciesHandler instead of the list of
+	Species field of SpeciesHandler.
+
+Wed Apr  2 18:39:27 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp
+	src/phase-space-handler.cpp src/picsimi.cpp src/scheduler.cpp 
+	src/species.cpp src/spectra.cpp src/surface-handler.cpp
+	src/surface.cpp: Removed a few unecessary contiguous cout statement.
+
+Tue Apr  1 10:23:28 CEST 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp: Fixed a bug in the initialisation of the potential
+	probes.
+	* src/picsimei.cpp src/picsimei.h: New files for new PIC code for both
+	electrons and ions.
+	* lib/Makefile.am src/Makefile.am tests/Makefile.am: Modified to account
+	new files.
+	* src/picsime.cpp src/picsimei.cpp: Fixed setting of Rho to be compatible
+	with Rhs setting in mudfas/src/poisson.cpp.
+	* src/surface.cpp: Fixed a bug when processing Rho: do not copy the
+	particle list from class Species but call overloaded erase function.
+	* configure.ac: Removed unecessary check of CC and CPP. Moved extra test
+	of CXX before libtool stuff.
+
+Wed Mar 19 17:07:24 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/beam.cpp src/drivenbackgrd.cpp
+	src/phase-space-handler.cpp src/phase-space.cpp src/picsimi.cpp
+	src/scheduler.cpp src/species-handler.cpp src/species.cpp
+	src/surface-handler.cpp: Renamed Parser class member function
+	getDebugLevel() to debugLevel()
+
+Thu Mar 13 10:34:46 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h
+	* src/diagnostics.cpp src/diagnostics.h src/drivenbackgrd.cpp 
+	src/drivenbackgrd.h src/generic-picsim.cpp src/generic-picsim.h 
+	src/pdf.cpp src/pdf.h src/phase-space.cpp src/phase-space.h
+	src/phase-space-handler.cpp src/phase-space-handler.h
+	src/potential-probes.cpp src/potential-probes.h src/scheduler.cpp
+	src/scheduler.h src/species.cpp src/species.h src/species-handler.cpp 
+	src/species-handler.h src/spectra.cpp src/spectra.h src/surface.cpp
+	src/surface.h src/surface-handler.cpp src/surface-handler.h: 
+	Moved unecessary inlined declarations of member functions from the
+	declaration header .h file to the definition/ implementation .cpp file. 
+	Attempt to reorder function definition as they are declared.
+	* src/generic-es-picsim.cpp: New file that contains definitions of class
+	GenericEsPicSim.
+	*  src/generic-es-picsim.cpp src/generic-es-picsim.h src/generic-picsim.cpp
+	src/generic-picsim.h src/picsime.cpp src/picsime.h src/picsimi.cpp
+	src/picsimi.h: Modifications to use the class GenericEsPicSim in both
+	PicSimE and PicSimI.
+
+
+Wed Mar 12 15:14:08 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp src/diagnostics.h src/generic-es-picsim.h
+	src/generic-picsim.cpp src/generic-picsim.h src/picsim-defs.h
+	src/picsime.cpp src/picsimi.cpp src/spectra.cpp src/spectra.h: Moved class
+	Spectra from the GenericPicSim class into the Diagnostics class. 
+	* src/species.cpp src/species.h: Declared possible member functions
+	`const'.
+	* src/generic-es-picsim.h src/generic-picsim.cpp src/picsime.cpp
+	src/picsimi.cpp src/species-handler.cpp src/species-handler.h: Moved 
+	getAlfa() as a member function of SpeciesHandler class.
+
+Tue Mar 11 19:30:22 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp src/species.h: Renamed member functions
+	linearProjection() into interpolateLinear(), particlesToDensity() into
+	depositCharge(), linearInterpolation() into depositLinear().
+	* src/species-handler.cpp src/species-handler.h: New member functions
+	depositCharge(), moveParticles() and getState(). Removed from
+	src/generic-picsim.{cpp,h}. In MPI, all parallelism on Species should be
+	handled there.
+	* src/generic-picsim.cpp: Commented member functions calculateDensity() 
+	and moveParticles(). 
+
+Mon Mar 10 10:51:02 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp src/species.h: Optimised linearInterpolation routine for
+	charge deposition using TinyVector rather than Array.
+	* src/time-utils.h: New file.
+	* src/scheduler.h: Moved iterStatus and toHMS manipulators into new file
+	time-utils.h
+	* makelinks.sh.in src/Makefile.am: Added time-utils.h
+	* src/generic-picsim.cpp src/generic-picsim.h src/species.cpp src/species.h
+	src/surface-handler.cpp src/surface-handler.h src/surface.cpp src/surface.h:
+	Integrated Surface class feature in the generic PIC class.
+
+Fri Mar  7 10:02:37 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.h src/diagnostics.h src/drivenbackgrd.h 
+	src/phase-space-handler.h src/species-handler.h: Added virtual
+	declarations.
+	* src/surface-handler.cpp src/surface-handler.h: New files.
+	* src/Makefile.amlib/Makefile.am: Added handle of new files.
+
+Thu Mar  6 15:51:07 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp src/beam.h src/drivenbackgrd.cpp src/drivenbackgrd.h
+	src/scheduler.cpp src/scheduler.h src/spectra.cpp src/spectra.h
+	src/surface.cpp src/surface.h: Removed completely the unecessary
+	structures BeamConf, DriveConf, SchedulerConf, SpectraConf and
+	SurfaceConf. 
+	* src/pdf.h src/phase-space.h src/potential-probes.h src/diagnostics.h
+	src/generic-picsim.h: Removed unecessary includes.
+	* src/backgrd.h: Added virtual declarations.
+	* tests/Blitz.cpp: Added benchmark for dot(a,b) vs. sum(a*b)
+	* src/generic-picsim.h src/picsime.h src/picsimi.h src/generic-es-picsim.h: 
+	Added virtual declarations.
+
+Wed Mar  5 17:30:16 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/drivenbackgrd.cpp
+	src/species.cpp src/species.h: Removed completely the unecessary structures
+	ParticleConf, SpeciesConf, BackgrdConf which simplify considerably the
+	readibility of the code. Minor renaming of some class members.
+
+Tue Mar  4 10:34:56 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp src/generic-es-picsim.h src/generic-picsim.cpp
+	src/picsime.cpp src/picsimi.cpp: Added a macro definition PARSER to avoid
+	repetition of code for parseHelp, parseVersion and parseTemplate.
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h src/diagnostics.cpp
+	src/diagnostics.h src/drivenbackgrd.cpp src/drivenbackgrd.h
+	src/generic-es-picsim.h src/generic-picsim.h src/pdf.h
+	src/phase-space-handler.h src/phase-space.cpp src/picsime.cpp src/picsime.h
+	src/picsimi.cpp src/picsimi.h src/scheduler.h src/species-handler.h
+	src/species.h src/spectra.cpp src/spectra.h src/surface.h: Reordered class
+	declaration into friend, public, protected, private.
+	* src/spectra.cpp src/spectra.h: Added support for the FFT class FT1d.
+
+
+Mon Mar  3 10:03:21 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	*  src/generic-es-picsim.h src/picsime.cpp src/picsimi.cpp: Renamed class
+	member function MultiGridSolver::Solve() to MultiGridSolver::solve().
+	* src/phase-space-handler.cpp src/phase-space-handler.h: New files.
+	* lib/Makefile.am src/Makefile.am: Added new files.
+	* src/species-handler.cpp: Added a macro definition PARSER to avoid
+	repetition of code for parseHelp, parseVersion and parseTemplate.
+	* src/potential-probes.cpp src/potential-probes.h: Work done to simplfy
+	the class.
+	* src/phase-space.cpp src/phase-space.h: Work done to simplfy the class.
+	Moved computation of phase space from the Diagnostics class.
+	* src/diagnostics.cpp src/diagnostics.h: Likewise.
+
+Sun Mar  2 17:36:18 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.h src/beam.h src/diagnostics.h src/drivenbackgrd.h
+	src/generic-es-picsim.h src/generic-picsim.h src/pdf.cpp src/pdf.h
+	src/phase-space.h src/picsim-defs.h src/picsime.h src/picsimi.h
+	src/potential-probes.h src/scheduler.h src/species-handler.h
+	src/species.cpp src/species.h src/spectra.cpp src/spectra.h src/surface.h
+	tests/Blitz.cpp: Removed unecessary use of keyword inline in class
+	declarations.
+
+Fri Feb 28 14:48:22 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.h: Replaced member function names getParticlesBegin(),
+	getParticlesEnd() by begin(), end(). Removed member function getParticles().
+	* src/diagnostics.cpp: Likewise.
+	* src/potential-probes.cpp src/potential-probes.h: Performed a few
+	cosmetic changes.
+	* src/phase-space.cpp src/phase-space.h: Performed a few cosmetic changes.
+
+Thu Feb 27 11:09:56 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species-handler.cpp src/species-handler.h: New files.
+	* src/Makefile.am lib/Makefile.am: Added new files.
+	* src/pdf.cpp src/pdf.h: Added member function initialis(); Performed a 
+	few cosmetic changes.
+	* src/backgrd.cpp src/beam.cpp src/species.cpp src/diagnostics.cpp
+	src/diagnostics.h src/phase-space.cpp: Performed a few cosmetic changes.
+	* src/generic-picsim.cpp src/generic-picsim.h src/picsime.cpp src/picsimi.cpp
+	src/picsimi.h: Modified code to support the new class SpeciesHandler to
+	dhandle all Species. Performed a few cosmetic changes.
+
+Wed Feb 26 18:31:44 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/generic-picsim.h src/pdf.h src/scheduler.h src/spectra.h: Replaced
+	where necessary use of parser::title_header.
+
+Tue Feb 25 11:36:18 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.h src/beam.h src/diagnostics.cpp src/diagnostics.h
+  src/drivenbackgrd.cpp src/drivenbackgrd.h src/generic-picsim.cpp
+	src/generic-picsim.h src/pdf.cpp src/pdf.h src/phase-space.h 
+	src/picsim-defs.h src/picsime.cpp src/picsime.h src/picsimi.cpp src/picsimi.h
+	src/potential-probes.cpp src/potential-probes.h src/scheduler.cpp 
+	src/scheduler.h src/species.cpp src/species.h src/spectra.cpp src/spectra.h
+	src/surface.cpp src/surface.h: Removed use of `using namespace' directives. 
+	Added `using' directives or namespace specs where necessary.
+
+Thu Feb 20 17:01:27 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/surface.cpp src/surface.h: New files. To handle different types of
+	closed surfaces with uniform density.
+
+Fri Feb  7 10:11:25 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* tests/Makefile.am: Removed extraneous building rules. Added variables
+	name_CPPFLAGS with dimension specs. Added `check' target. 
+	* lib/Makefile.am tests/Makefile.am: Removed unecessary variable
+	declaration `LINK'
+
+Thu Feb  6 11:05:44 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.ac: Modified path to Blitz include
+	* lib: New directory to build the libraries
+	* all Makefile.am: Modified in order to handle libraries in `lib'
+
+Thu Jan 30 15:49:14 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.ac: New file renamed from configure.in
+	* COPYING INSTALL depcomp install-sh mkinstalldirs missing aclocal.m4
+	config.guess config.sub configure ltmain.sh: Removed from repository.
+	* Makefile.in doc/Makefile.in matlab/@sd/Makefile.in
+	matlab/@single/Makefile.in matlab/Makefile.in share/Makefile.in
+	share/templates/Makefile.in src/Makefile.in tests/Makefile.in: Likewise
+
+Mon Jan 13 17:15:15 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp: use of the new TinyVector constructor from a TinyVector
+	with another type instead of the assignement to initialise RVectord
+	variable.
+
+Tue Jan  7 14:43:00 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* makelinks.sh.in: new script file to update links to tools outside mudfas
+	* configure.in: added support to generate makelinks.sh from
+	makelinks.sh.in
+	* configure: regenerated by autoreconf 2.53
+
+Mon Jan  6 17:36:35 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: removed unecessary substitution of SUBDIRS
+	* Makefile.am: added SUBDIRS
+	* doc/Makefile.am matlab/@sd/Makefile.am matlab/@single/Makefile.am
+	share/templates/Makefile.am src/Makefile.am tests/Makefile.am: removed
+	unecessary SUBDIRS
+	* configure Makefile.in doc/Makefile.in matlab/@sd/Makefile.in
+	matlab/@single/Makefile.in share/templates/Makefile.in src/Makefile.in
+	tests/Makefile.in: regenerated by autoreconf 2.53
+	* src/generic_es_picsim.h src/generic_picsim.cpp src/generic_picsim.h
+	src/phase_space.cpp src/phase_space.h src/picsim_defs.h
+	src/potential_probes.cpp src/potential_probes.h: files renamed replacing
+	'_' into '-'
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h
+	src/diagnostics.cpp src/diagnostics.h src/drivenbackgrd.cpp
+	src/drivenbackgrd.h src/generic-es-picsim.h src/generic-picsim.cpp
+	src/generic-picsim.h src/pdf.cpp src/pdf.h src/phase-space.cpp
+	src/phase-space.h src/picsim-defs.h src/picsime.cpp src/picsime.h
+	src/picsimi.cpp src/picsimi.h src/potential-probes.cpp
+	src/potential-probes.h src/scheduler.cpp src/scheduler.h src/species.cpp
+	src/species.h src/spectra.cpp src/spectra.h: replaced #include "..." into
+	#include <...>
+	* src/Makefile.am:  replaced '_' into '-' where necessary
+	* src/Makefile.in: regenerated by autoreconf 2.53
+	* tests/Slist.cpp tests/Deque.cpp tests/List.cpp tests/Map.cpp
+	tests/Vector.cpp: replaced NULL with 0
+	* tests/Fftw.cpp tests/Pdf.cpp tests/Picsim.cpp.in: replaced #include "..."
+	into #include <...>
+	* tests/Picsim.cpp.in: replaced #include "..." into #include <...>,
+	replaced NULL with 0
+	* src/scheduler.cpp: replaced NULL with 0
+	* src/diagnostics.cpp: replaced C-style cast into C++-style static_cast
+	when calling hdf interface functions
+
+Sat Jan  4 20:16:55 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp src/backgrd.h src/beam.cpp src/beam.h
+	src/diagnostics.cpp src/diagnostics.h src/drivenbackgrd.cpp
+	src/drivenbackgrd.h src/generic_picsim.cpp src/generic_picsim.h
+	src/picsime.cpp src/picsime.h src/picsimi.cpp src/picsimi.h
+	src/potential_probes.cpp src/scheduler.h src/species.cpp src/species.h
+	src/spectra.cpp src/spectra.h: change the first letter of member
+	functions to lower case
+	* src/picsim_defs.h: removed VectorField typedef for type coherence
+	* src/generic_es_picsim.h: new file
+
+Sun Dec 22 15:13:53 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: replaced option --enable-double by two separate options
+	--enable-double-field and --enable-double-coordinate
+	* configure: regenerated by autoreconf 2.53
+	* tests/Pdf.cpp: added flag -q for quiet mode and a few cosmetic changes 
+	* src/species.cpp src/species.h: replaced move and deccel function selected
+	from switch/case method to a call of function from an array of member
+	functions
+	* src/scheduler.h: corrected type of Boundary<MReal,DIMR> into
+	Boundary<PReal,DIMR>
+	* src/picsime.cpp: corrected type of Boundary<MReal,DIMR> into
+	Boundary<PReal,DIMR> for variable alfa
+	* src/diagnostics.cpp: corrected type of Boundary<MReal,DIMR> into
+	Boundary<PReal,DIMR> for variable domain and a static_cast to PReal for dim
+	* src/picsimi.cpp: corrected type of Boundary<MReal,DIMR> into
+	Boundary<PReal,DIMR> for variable alfa
+
+Sat Dec 21 16:27:05 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp diagnostics.cpp src/drivenbackgrd.cpp src/pdf.cpp
+	src/potential_probes.cpp src/spectra.cpp: replaced old C style cast by
+	preferred new C++ cast
+	* src/species.cpp: removed unecessary commented instruction
+	* src/picsim.cpp src/picsim.h: removed files
+	* src/Makefile.am: removed compilation instruction for src/picsim.cpp
+	* tests/Makefile.am: removed compilation instruction for test/Picsim2d and
+	test/Picsim3d
+	* src/Makefile.in tests/Makefile.in: regenerated by autoreconf 2.53
+
+Fri Dec 20 16:39:00 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp src/species.h: in ParticlesToDensity() and
+	FieldToParticle() member functions moved from PReal type calculation to
+	double type due to truncation error
+
+Mon Dec 16 17:10:17 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: added the AM_MAINTAINER_MODE automake macro to avoid
+	generating the rules to rebuild these out-of-date maintainer files by
+	default. To rebuild them run configure with the option
+	--enable-maintainer-mode
+	* aclocal.m4: regenerated by autoreconf 2.53
+	* configure: regenerated by autoreconf 2.53
+	* Makefile.in doc/Makefile.in matlab/Makefile.in matlab/@sd/Makefile.in
+	matlab/@single/Makefile.in share/Makefile.in share/templates/Makefile.in
+	src/Makefile.in tests/Makefile.in: regenerated by autoreconf 2.53
+
+Fri Dec 13 14:34:51 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* aclocal.m4 mudfas/aclocal.m4: regenerated using autoreconf 2.53
+
+Wed Sep 11 11:48:50 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: added support for MPI on SGI 
+	* configure: regenerated with autoconf 2.53
+
+Tue Sep 10 14:28:40 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/potential_probes.h: removed include <string>, and moved include
+	"picsim_defs.h" before include "classexception.h" to fix a bug with aCC
+
+Mon Sep  9 11:23:03 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* tests/Picsim.cpp.in: added std scoping using BZ_STD_SCOPE when no MPI
+	support
+
+Fri Sep  6 11:09:29 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/scheduler.h: added #include <blitz/tinyvec-et.h> to cope with the
+	new version of Blitz which separate math expression with TinyVector into
+	this header
+
+Wed Jul 24 11:06:41 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: removed occurences of -DBZ_DISABLE_XOPEN_SOURCE, this is
+	the default and changed to -DBZ_ENABLE_XOPEN_SOURCE for DECcxx6.2 and
+	DECcxx6.3 required for scoping of ilogb.
+	* configure: rebuilt from configure.in using autoconf 2.53
+	* all Makefile.in: rebuilt from Makefile.am using automake 1.6.2
+	* aclocal.m4: rebuilt using aclocal 1.6.2
+
+Fri May 24 10:06:06 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* tests/Pdf.cpp: removed unnecessary cerr.fflush() in my_new_handler,
+	removed the ambiguity of set_new_handler by use of the BZ_STD_SCOPE macro
+	* tests/Picsim.cpp.in: likewise
+
+Thu May 23 16:49:16 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: regenerated by running the command autoupdate from
+	autoconf 2.53
+	* configure: regenerated by running the command autoreconf --force
+	--install with autoconf 2.53, automake 1.6.1, libtool 1.4.2
+	* every Makefile.in: likewise
+	* configure.in: added SGI support
+	* configure: regenerated with autoconf 2.53, automake 1.6.1, libtool 1.4.2
+
+Wed May 22 18:04:40 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* new branch: version 1.1 (command run: cvs tag -b Picsim_1_1)
+
+Fri Mar 29 14:00:49 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/scheduler.{h,cpp}: improved timer system in the Update() method
+
+Mon Mar 11 09:53:38 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+  * config.guess: update to (GNU libtool) 1.3c
+	* config.sub: likewise
+	* configure.in: added support for Intel C++ compiler icc
+
+Mon Feb 25 16:43:37 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src,tests: cosmetic changes for function calls
+
+Fri Feb  1 17:31:46 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: removed unecessary string declaration when throwing an
+	exception
+	* src/spectra.cpp: likewise
+	* src/pdf.{h,cpp}: replaced int exception by class exception
+	* src/species.cpp: replaced int exception by class exception
+	* src/scheduler.h: added support for ctime/time.h header
+	* tests/Fftw.cpp: modified to support of the new FFT wrapper class dclared
+	in fourier.h
+	* configure.in: added check for ctime header
+
+Fri Jan 25 16:06:35 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+  * configure.in: adjusted profiling flags for aCC
+	* src/species.h: commented #include<mudfas_defs.h>
+
+Tue Jan 22 14:32:41 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: harmonisation of the typedefs and picsim_defs.h organisation
+
+Mon Jan 21 12:49:08 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.h: removed unecessary includes that created conflicts
+	with aCC
+	* src/phase_space.h: likewise
+	* src/phase_space.{h,cpp}: renamed Name to PhaseSpaceName and Ndims to
+	PhaseSpaceDimNumber, PhaseSpace::isSpeciesIn() to 
+	PhaseSpace::isSpeciesinPhaseSpace(), 
+	* src/diagnostics.{h,cpp}: name propagation correction from phase_space
+	* src/species.cpp: order the DebugLevel() output for the MPI support 
+
+Sat Jan 19 18:48:24 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsime.h, src/picsimi.h: removed unnecessary empty enum parser_enum
+	declaration
+	* src/diagnostics.h: declared configuration struct private, commented 
+	includes for string, iostream and vector and using namespace statement
+	* src/phase_space.h: likewise
+
+Mon Jan 14 15:24:41 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsim_defs.h, src/pdf.h: commented #define BZ_NEW_EXPRESSION_TEMPLATES
+	* src/picsim_defs.h: updated template function to operator<< for vector<T>
+	* configure.in: added -DBZ_DISABLE_NEW_PROMOTE in CXXFLAGS for aCC
+
+Wed Jan  9 15:54:03 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: added support for HP-UX aCC
+
+Tue Jan  8 13:08:53 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsimi.cpp: fixed a bug in CalculateFields() where buffer was not
+	initialised properly.
+	* src/picsimi.cpp, src/picsime.cpp: fixes in CalculateFields()
+	* src/diagnostics.cpp: do not account for charge number but particle
+	number
+	* src/diagnostics.h: Initialise and Finalise only if one of the
+	diagnostics is required
+
+Mon Jan  7 10:53:27 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: moved MPI support initialisation in top of constructor
+	* src/pdf.cpp: handle macros finite and isfinite
+	* src, tests: MPI_LOGICAL replaced by MPI_BYTE
+	* src/species.{h,cpp}: Movex and Deccelx new functions to handle
+	separately when different force types are active
+	* src/scheduler.{h,cpp}: ForceSetUp new variable to describe active forces
+
+Sat Jan  5 14:32:48 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/generic_picsim.cpp, src/picsim.cpp: moved Insert<Beam>() first so
+	that the master (root) process handle if one required
+	* src/diagnostics.h: no diagnostics by default
+
+Fri Jan  4 13:47:57 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/pdf.cpp: MPI support for seed initialisation
+	* tests/Picsim.cpp.in: added timimg of the non MPI version of the code
+	* src/generic_picsim.{cpp,h}, src/picsim.{cpp,h}, src/picsimi.cpp: variable
+	Ne renamed to Rho_e
+
+Wed Dec 19 21:24:55 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: MPI support for DebugLevel code
+	* src/diagnostics.{cpp,h} and related: restructuring of the Initialisation
+	and Save member functions
+
+Tue Dec 18 09:50:42 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src, tests: start to write core code for support for MPI, mainly the
+	class GenericPicSim and derived classes are concerned as well as the main
+	program
+
+Fri Dec 14 17:49:30 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: support for MPI completed
+	* src, tests: cosmetics changes for the output of parameters
+	* configure.in: systemize the use of LDFLAGS and lIBS
+
+
+Tue Dec 11 14:48:12 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/hdf_interface.{h,cpp}: added new field dimtype in the class
+	Hdf::Variable
+	* src/*.cpp, tests/*.cpp: updated InsertOption to include the argument of
+	type Any consisting of the default value for the variable to parsed.
+	* src/picsim.{cpp,h}, src/generic_picsim.{cpp,h}: initialised the default
+	set up of species in .h, not in .cpp!
+
+Sun Dec  9 19:52:14 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* tests/Pisim.cpp.in: new file template for all PIC main programs
+	* tests/Makefile.am: added targets to buid Picsim.cpp, Picsimi.cpp and
+	Picsime.cpp from template Picsim.cpp.in
+
+Wed Dec  5 22:02:02 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsime.{cpp.h}, src/picsimi.{cpp,h}: make these PIC simulator
+	inheritate from the abstract base class GenericPicSim
+	* src/generic_picsim.{cpp,h}: complete the declarations of the member
+	functions, specially the pure virtual member functions CalculateFields() and 
+	SaveDiagnostics()
+	* tests/Picsimi.cpp: new file 
+
+Tue Dec  4 20:29:27 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: added support for MPI compiler
+
+Fri Nov 30 13:36:10 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/*.{h,cpp}, mudfas/src/*{h.cpp}: os operators replaced by new generic
+	* templates for outputting vectors<T> and TinyVectors<T,Dim>.
+
+Thu Nov 29 11:18:56 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* cvs tagged picsim_1_0
+	* configure.in, src/configure.in: updated version from 1.0 to 1.01
+	* src/*.{h,cpp}, mudfas/src/*{h.cpp}: removed parsing of --input|-i since
+	Parser class has been updated so that it contains parsing of it by default
+	* src/*.{h,cpp}, mudfas/src/*{h.cpp}: removed member function ParseFile
+	and changed ParseOption to ParseOptioninFileonCmdLine which do the parsing
+	of a parameter file if specified first and on the command line
+	* src/*.{h,cpp}, mudfas/src/*{h.cpp}: removed debug_level variable from
+	the config structures, use instead the Parser debug level facility.
+
+Wed Nov 28 13:40:08 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/*.{cpp,h}: astylised
+
+Tue Nov 27 20:36:51 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/generic_picsim.{h,cpp}: new files for generic pic
+	* src/species.{h,cpp}, src/backgrd.{h,cpp}, src/beam.{h,cpp}: class solver
+	removed from argument list to to Initialise member function since only
+	required to set the temperature to estimate the scale height when
+	hydrostatic equilibrium.
+	The hydrostatic start flag and a new variable for the hydrostatic
+	temperature moved into the abstract base class species
+	* src/species.{h,cpp}: removed argument GridSize from member functions
+	ParticlesToDensity and FieldToParticles since it is redundant.
+
+Thu Nov 15 17:37:58 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src, tests: cosmetic changes
+
+Sat Nov 10 00:48:07 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.{cpp,h}: uniformise the class
+
+Tue Sep 25 13:56:52 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/scheduler.{h,cpp}, src/species.{h,cpp}: all calculation on the
+	fields defined on the simulation area uses the Boundary class defined in
+	the scheduler of the simulation while the Boundary class in each species
+	is used exclusively for the initialisation and injection of new particles
+	* src/scheduler.h: renamed inlined function getDomain() into
+	getDomainBoundary(), added getDomainMinBoundary(), getDomainMaxBoundary()
+	and getDomainSize()
+	* src/backgrd.{h,cpp}, src/drivenbackgrd.{h,cpp}: added new injection mode
+	noinject=2 for no injection at all
+
+Thu Sep 13 16:16:23 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: fixed a bug in the calculation of the variable MeanDrift
+	when u<0
+
+Sun Sep  2 11:55:47 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/picsim?.cpp, src/scheduler.cpp: adjust output format
+
+Fri Aug 31 21:45:22 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.{h,cpp}: added a variable to time specify the variation of the
+	intensity of the flux.
+
+Tue Aug 14 13:22:07 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp: fixed a bug in the size declaration of the energies
+	arrays.
+
+Mon Aug 13 15:20:30 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp: in FieldToParticle, fixed a truncation bug when
+	particle's position was too near the upper boundary
+
+Fri Jun 15 11:57:51 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/sepctra.{cpp,h}: added possibility to choose a range of k for the 
+	spectra S(k,frq)
+
+Sun Jun 10 18:17:44 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/hdf_interface.{cpp,h}: new files to separate the HDF interface from
+	the diagnostics
+
+Tue Jun  5 17:39:13 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp, src/drivenbackgrd.cpp: fixed a bug when the bulk
+	velocity is not zero, StatInject min and max swapped, if number of
+	particles conserved the Loss min and max swapped 
+	* src/picsimi.{cpp,h}, src/picsime.{cpp,h}, tests/Picsime: new files 
+	for electron PIC
+
+Thu May 31 20:00:52 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp: fixed check for upper boundary of saving
+	diagnostics
+
+Fri Apr 20 13:20:58 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/pdf.cpp: fixed check for boundary for uniform and perturb random
+	number generator
+	* src/backgrd.cpp, src/beam.cpp, src/drivenbackgrd.cpp: removed check of
+	boundary when drawing a random number
+	* src/species.cpp: removed variable one when asking for epsilon number
+
+Wed Apr 18 13:50:23 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/pdf.cpp: NumberGenerator::uniform() fixed a bug due to truncation
+	error treatment that could return a number less than min
+	* src/species.cpp, src/species.h: introduced test for lower boundary
+	and renamed Species::CheckUpperBoundary() to Species::CheckBoundary()
+
+Fri Apr  6 11:23:13 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: cosmetic fixes
+	* src: added a new parameter to control the output level: debug_level
+	* src/scheduler.cpp: added diagnostic of used and remaining time 
+
+Thu Apr  5 13:59:35 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* run astyle on all .cpp and .h
+
+Wed Apr  4 11:37:24 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: added in CheckParam the test of amin and amax for
+	the perturb random generator
+	* src/backgrd.cpp, src/drivenbackgrd.cpp, src/beam.cpp: moved specific
+	parameters for the class in a Conf structure in order to keep an
+	homogeneous structure of the classes
+	* src: cosmetic changes in the order of the argument parsing member
+	functions 
+
+Tue Apr  3 16:15:45 CEST 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp, src/backgrd.cpp, src/drivenbackgrd.cpp: moved the
+	truncation error correction of the uniform (right opened) random generator
+	moved into src/pdf.cpp in the uniform routine
+
+Mon Mar 19 16:44:24 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.h: added a new member function LinearInterpolate that
+	optimises the calculation of the weight matrix
+	* src/scheduler.h: inlined get member functions for force fields
+	and directly return the VVector in the DIMR==2 case
+
+Sat Mar 17 10:45:54 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in : added support to profiling via --enable-profile
+
+Fri Mar 16 14:02:37 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: fixes in diagnostics' parser help and version and constructor
+
+Thu Mar 15 18:16:03 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: work done on the uniformisation of the parsing, especially the use
+	of augmented virtual member functions
+	* Changed version to 1.0
+	* Changed the optimization flag for DECcxx to -O3 -inline speed (-O4
+	crashed compiler!)
+
+Wed Mar 14 15:37:40 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: uniformisation of the parser interface for the classes.
+	ParamParsing is private and should be called at creation of the object
+
+Wed Mar  7 16:53:50 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: a lot of restructuring of the classes 
+	* src: separation one class/one file for diagnostics
+
+Mon Mar  5 10:03:37 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: fixed calculation of Flux with Flux = Lambda*MeanDrift
+	and MeanDrift mean value of flux (or rayleigh) pdf 
+
+Sat Mar  3 11:15:20 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: fixed Seff when  drift speed = 0 and gravitation field
+
+Mar  2 16:30:43 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+  * updating picsim version to 0.9
+  * src/beam.cpp: added the possibility to have a beam with drift speed = 0
+	* src/pdf.cpp: fixed flux random generator to use rayleigh if mean = 0
+	* TAG BRANCH picsim_0_9
+
+Thu Mar  1 16:48:56 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* fixed a bug in src/species.cpp in Species::MoveParticles and
+	in Species::DeaccelerateParticles: the ratio Z_s/mu_s was not taken into
+	account to calculate the effect of the electric field
+	* A lot of cosmetics and fixes: no codes in class declaration, the
+	function can be written in the hearder but outside the Class{};
+	Some effort to use the const qualifier for functions
+
+Wed Feb 21 18:09:13 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* added src/spectra.h and src/spectra.cpp: class to calculate ion line
+	spectra
+	* rerun autoconf
+
+Fri Feb 16 11:09:52 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* cleaned up configure.in
+	* rerun autoconf
+	* Energy calculation review to diagnose energy/species
+
+Tue Feb 13 21:47:41 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp, src/diagnostics.h: added class PotentialProbes
+
+Mon Feb  5 11:28:48 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* moved directory note to doc
+	* rebuilt configure
+
+Thu Feb  1 16:49:47 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: added support for periodic beam
+
+Wed Jan 31 17:52:22 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp: boundary value for n_i in the insulated case changed
+	from 0 to 1 (n_e==n_i means \phi=0)
+
+Thu Jan 25 11:18:19 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: added support for pulse perturbation and new 
+	option to choose the perturbation type
+	* src/pdf.cpp: fixed a bug in the estimation of dfluxCDF
+
+Fri Jan 19 19:28:14 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: fixed a bug in the evaluation of the coefficient
+	a1 for the perturbation in the case DIMR==3 (bivariate probability
+	function f(x,y)=f(x)*f(y|x) Bayes theorem)
+	* src/beam.cpp: fixed seff in the case DIMR==3 
+
+Thu Jan 18 16:34:30 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: fixed a bug in the evaluation of the coefficient
+	a1 for the perturbation in the case DIMR==3 (bivariate probability
+	function f(x,y)=f(x)*f(y|x) Bayes theorem)
+
+Tue Jan 16 15:50:53 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp, * src/diagnostics.h: added field SpeciesNames in
+	phase_space_conf to list the species to integrate in the phase space
+	* src/diagnostics.cpp: fixed a bug in the counting of number of charges in
+	the phase space
+	*src/drivenbackgrd.cpp: fixed bug in the calculation of the position of
+	the perturbation in the case DIMR==3
+
+Mon Jan 15 11:36:58 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp: fixed calculation of V.dim for PhaseSpace type
+	variable
+
+Fri Jan 12 16:28:45 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp: calculation of StatInject corrected in presence of
+	gravity field
+	* src/diagnostics.cpp,  src/diagnostics.h: more work done on the phase
+	space diagnostic
+
+Wed Jan 10 17:50:51 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/diagnostics.cpp, src/diagnostics.h: structure PhaseSpace in place
+	and initialisation done in Diagnostics
+
+Tue Jan  9 10:38:15 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp, src/beam.cpp, src/drivenbackgrd.cpp: all uniform random
+	secured so that r!=Domain.max
+	* src/diagnostics.cpp, src/diagnostics.h: work done on the phase space
+	diagnostic class
+	* update and fixe copyright and email adress
+
+Mon Jan  8 11:41:51 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp: InitialiseExponential loop until r<Domain.max
+
+Thu Jan  4 11:06:14 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/beam.cpp: fixed a bug in the injection of new particles at the upper
+	boundary (caused by draw.uniform==0)
+
+Wed Jan  3 18:05:04 CET 2001 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp: fixed a bug in the injection of new particles at the upper
+	boundary (caused by draw.uniform==0)
+	* src/drivenbackgrd.cpp: likewise
+
+Tue Dec 19 14:04:44 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp: fixed a bug in the deacceleration that was increasing the
+	velocity of particles in the presence of magnetic field
+
+Sat Dec 16 15:34:45 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: fixed a bug in the indexing of the face containing
+	the perturbation
+	* src/pdf.cpp, src/pdf.h: promoted all PReal types to double when inverting
+	the cumulated pdf
+	* src/backgrnd.cpp: fixed the calculation of Vmin and Vmax which enter the
+	expression of the mean number of particles to enter a face
+
+Fri Dec 15 18:05:27 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/drivenbackgrd.cpp: fixed calculation of alpha for the perturbation
+	random generator number
+
+Thu Dec 14 12:16:09 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/backgrd.cpp, src/backgrd.h, src/drivenbackgrd.cpp,
+	src/drivenbackgrd.h: added new parameter InjectMode in order to choose
+	whether to inject to keep number of particles or statistic input
+	* src/scheduler.h: fixed the energy_conserving calculation of E field
+	* src/background.cpp, src/drivenbackground.cpp: fixed injection to draw
+	the necessary number of random numbers
+
+Wed Dec 13 16:42:08 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.cpp:
+	-in FieldToParticle() fixed upper limit test when energy_conserving mode
+	* src/pdf.cpp:
+	-fixed EPS in flux and perturb for convergence yielding correct mean and
+	standard deviation
+	* src/drivenbackground.cpp:
+	-moved in Inject the particle iterator i out of the for (;;)
+
+Tue Dec 12 16:32:13 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/background.cpp: 
+	-fixed declaration of vector nu from DIMR to DIMV
+	-fixed constant declaration M_SQRT2PI 
+	-moved in Inject the particle iterator i out of the for (;;)  
+	* src/species.cpp:
+	-fixed in free space boundary of FixedBoundary several loss from several
+	boundaries
+
+Thu Dec  7 17:19:10 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* A lot done! Now there are 3 species types, Background, DrivenBackground and
+	Beam
+	* Picsim code is now runable, all the different modules (or classes:-) are now
+	interfaced (including Mudfas solver)
+	* All the programs now run under exception handling with try/throw/catch 
+	implementation
+	* configure has been rerun with added directory share
+
+Wed Nov 22 12:56:20 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* added tests/Blitz.cpp: diverse tests with blitz library
+
+Mon Nov 20 16:26:38 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/species.h, src/species.cpp, src/backgrd.h, src/backgrd.cpp,
+	src/beam.cpp, src/beam.h: fixed pure virtual member function problem
+
+Mon Nov 13 13:08:09 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* tests/Deque.cpp, tests/List.cpp, tests/Map.cpp, tests/Pdf.cpp,
+	tests/Picsim.cpp, tests/Slist.cpp, tests/Vector.cpp: astylised
+	* src/beam.h: added private function erfinv (inverse error function)
+	* added tests/Picsim2d.dat and tests/Picsim3d.dat: default input files for
+	tests/Picsim2d and tests/Picsim3d
+
+Sun Nov 12 15:40:18 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src: improved clarity of typedefs, replaced *Coordinate by *Vector.
+	introduced class Boundary.
+
+Thu Nov  9 11:33:52 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: improved CXX_OPTIMIZE_FLAGS and CXXFLAGS for cxx
+
+Tue Nov  7 18:25:33 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure works now with libraries for linux, DEC and HP
+	* src/pdf.h, src/pdf.cpp: removed ViewConf and replaced by 
+	friend ostream <<operator()
+	* src/species.h, species.cpp, backgrd.h backgrd.cpp: likewise
+	* scheduler.h, scheduler.cpp: likewise
+	* picsim.h, picsim.cpp: likewise
+
+Mon Nov  6 12:15:16 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: added check  for header cstdlib and cerrno
+	* src/backgrd.cpp, src/beam.cpp added parsing of type TinyVector<T,N> for
+	conf.T and conf.u
+	* ltmain.sh: modified to handle cxx/osf lines around 730, 833 and 929
+
+Sat Nov  4 21:35:52 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/Makefile.am removed definition of TEMPLATES if not CXX_COMPAQ
+	* Added include.m4. Contains stuff to build library for cxx/osf5.0
+	* src/species.cpp, src/species.h added support for parameters through files
+	* src/beam.cpp, src/beam.h likewise
+	* src/backgrd.cpp, src/backgrd.h likewise
+	* src/scheduler.cpp, src/scheduler.h likewise
+	* src/species.cpp, src/species.h likewise
+
+Wed Nov  1 13:17:31 CET 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* many language fixes
+	* cosmetic fixes to remove warnings
+	* work done for the parsing of options for subclasses to Species base
+	class
+
+Sat Oct 28 14:40:50 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Modified randgen* into pdf*
+	* Improved consistency for test programs : 
+	test_randgen Into Pdf* 
+	main* into Picsim*
+
+Fri Oct 27 21:30:50 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* More configure work and debugging
+
+Thu Oct 26 14:10:16 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Argument parse class implemented in all classes
+
+Wed Oct 25 18:46:15 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Argument parse class implemented in the scheduler and randgen class
+
+Tue Oct 24 13:04:37 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* rebuilt configure with appropriate dependencies build (cont'd)
+
+Mon Oct 23 11:09:01 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* rebuilt configure with appropriate dependencies build
+
+Fri Oct 20 11:30:57 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* rebuilt configure after autoupdate and tips from autoscan
+
+Thu Oct 19 13:59:10 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Completely rebuilt configure using *much* better Makefile rules!
+
+Wed Oct 18 10:13:29 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+
+Tue Oct 17 10:06:32 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Class declaration reorganised in a more standard way: public, protected,
+	private, friend;
+
+Mon Oct 16 15:16:19 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Modified configure tool to work with DEC/cxx
+
+Thu Oct 12 16:15:44 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Initialisation to default values of config is now performed in the
+	 constructor of the structure
+	 * Modified configure.in to handle compilation with cxx. Definition of a
+	 path to a cxx_repository with -ptr option of cxx
+
+Wed Oct 11 17:48:40 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* More development of the PIC class and other classes
+
+Tue Oct 10 19:18:57 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Added test for random generators
+	* More development of the scheduler class
+
+Mon Oct  9 14:31:35 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Merged Mudfas solver into picsim
+	* Modified configure to enable/disable double type
+
+Sat Oct  7 13:49:06 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* In matlab version: vectorised the routines particles_to_rho.m and
+	field_to_particles.m
+
+Fri Oct  6 11:00:55 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Added namespace std in the container test files and randgen.h
+	* Removed dedicated Makefiles in tests directory
+	* Added compilation flag -std strict_ansi for cxx
+
+Thu Oct  5 17:31:00 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* Added Flux function to randgen.h
+
+Tue Oct  3 17:28:32 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure system rebuilt with conditional library making
+	* fixed static declaration of the random number generators
+	* start to write the constructors for backgrd and beam...
+
+Thu Sep 28 13:01:46 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure sustem rebuild with conditional test on Slist.cpp
+	* in Map.cpp removed 'const' from the declaration of the map 
+
+Wed Sep 27 17:37:31 CEST 2000 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure system rebuild with the option to build libraries for 2d and
+	3d cases.
+
+Tue Sep 26 11:07:55 CEST 2000 Patrick Guio <patrick@phys.uit.no>
+	* Added dependence on mudfas for picsim library
+
+Mon Sep 25 16:06:22 CEST 2000 Patrick Guio <patrick@phys.uit.no>
+	* Dependences in configure/Makefile.am to mudfas added 
+	* Rerun automake/autoconf with newest version
+
+Thu Sep 21 15:03:13 MET DST 2000 Patrick Guio <patrick@phys.uit.no>
+	* The skeleton is getting better....
+
+Wed Sep 20 18:31:44 CEST 2000 Patrick Guio <patrick@phys.uit.no>
+	* A lot of cleaning and changes in the configure
+
+Tue Sep 19 17:43:25 CEST 2000 Patrick Guio <patrick@phys.uit.no>
+	* Added files scheduler.cpp/h beam.cpp/h backgrd.cpp/h
+
+2000-08-18 Patrick Guio <patrick@phys.uit.no>
+	* Modified display of iterations with backspace 
+
