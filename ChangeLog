@@ -1,3 +1,8 @@
+2024-02-13  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* src/pdf.cpp (1.82):
+	Fixed warning of uninitialised variable send.
+
 2024-01-26  Patrick Guio <p.guio@ucl.ac.uk>
 
 	* src/species-handler.cpp (1.52):
