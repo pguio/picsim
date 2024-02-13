@@ -1,0 +1,52 @@
+#!/bin/bash -l
+
+# CINECA IBM Blue Gene Fermi login.fermi.cineca.it
+
+export PATH=$PATH:/cineca/prod/tools/tcl/8.5.7/xl--10.1/bin/
+. /cineca/prod/environment/module/3.1.6/none/init/bash 
+
+module load hdf5/1.8.9_ser--bgq-xl--1.0
+module load szip
+module load zlib
+
+module load bgq-xl
+
+module load fftw/3.3.2--bgq-xl--1.0
+
+
+with_blitz=$HOME
+with_fftw3=$FFTW_INC,$FFTW_LIB
+enable_hdf5_output=yes
+with_hdf5=$HDF5_HOME 
+enable_cxx_flags_preset=no
+enable_optimize=no 
+enable_64bit=yes 
+
+CC=bgxlc 
+CXX=bgxlC 
+
+DEFS="-DH5Acreate_vers=2 -DH5Dcreate_vers=2 -DH5Dopen_vers=2 -DH5Gcreate_vers=2 -DH5Gopen_vers=2"
+
+# optim 1
+#CXXFLAGS="-O3 -qstrict -qstrict_induction -qinline -qansialias -qhot -qunroll=yes -qarch=qp -qtune=qp -qipa $DEFS" 
+# optim 2
+#CXXFLAGS="-O3 -qstrict -qstrict_induction -qinline -qansialias -qhot -qunroll=yes -qarch=qp -qtune=qp $DEFS" 
+# optim 3
+#CXXFLAGS="-O3 -qstrict -qstrict_induction -qansialias -qhot -qunroll=yes -qarch=qp -qtune=qp $DEFS" 
+# optim 4
+#CXXFLAGS="-O3 -qstrict -qstrict_induction -qansialias -qunroll=yes -qarch=qp -qtune=qp $DEFS" 
+# optim 5
+#CXXFLAGS="-O3 -qstrict -qarch=qp -qtune=qp $DEFS" 
+# optim 6
+#CXXFLAGS="-O3 -qarch=qp -qtune=qp $DEFS" 
+# optim 7
+CXXFLAGS="-O2 -qarch=qp -qtune=qp $DEFS" 
+
+
+
+LDFLAGS="-L$SZIP_LIB -L$ZLIB_LIB"
+
+enable_mpi=yes
+
+MPICXX=mpixlcxx
+

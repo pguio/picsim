@@ -1,0 +1,28 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision 5560 FC38
+####
+
+with_blitz=/usr/local/blitz/include,/usr/local/blitz/lib64
+
+with_hdf4=/usr/include/hdf,/usr/lib64/hdf
+enable_hdf5_output=yes
+with_hdf5=/usr/include,/usr/lib64
+
+with_fftw3=yes
+
+enable_cxx_flags_preset=no
+
+CXX=g++
+
+AR=ar
+
+CXXFLAGS="-std=c++11 -Wall -O3 -march=native -funroll-loops"
+
+enable_mpi=yes 
+
+# tested with openmpi and g++
+MPICXX="mpicxx"
+
+echo configuring for jazz6

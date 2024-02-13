@@ -1,0 +1,11 @@
+
+Wed May 22 18:04:40 CEST 2002 
+New branch: version 1.1 (command run: cvs tag -b Picsim_1_1)
+
+Thu Nov 29 11:18:56 CET 2001 
+New branch: version 1.0 (command run: cvs tag -b picsim_1_0)
+
+New in 2.0.b1:
+Added new species class to support non homogeneous density for
+background type species.
+

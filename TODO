@@ -1,0 +1,23 @@
+-*- outline -*-
+
+Things it might be nice to do someday.  I haven't evaluated all of
+these suggestions... their presence here doesn't imply my endorsement.
+-pg
+
+* Parallelise class Species with MPI
+  DONE 
+
+* Improvment of the parallelism for class Species
+  Give the user the possibility to choose the configuration of
+  processes/species. Move all parallelism to the SpeciesHandler level.
+
+* Add a test mode to check timing
+
+* Dump and Reload facilities (checkpoint)
+
+* Full electro magnetic code
+
+* Fluid approach with momentum equations (currents)
+
+* Better approach to Boltzmann fluid and quasi-neutrality
+

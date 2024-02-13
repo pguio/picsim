@@ -1,0 +1,1208 @@
+%
+% $Id: picsim.tex,v 1.17 2013/03/15 17:33:12 patrick Exp $
+%
+%
+% Copyright (c) 2000-2011 Patrick Guio <patrick.guio@gmail.com>
+% All Rights Reserved.
+%
+% This program is free software; you can redistribute it and/or modify it
+% under the terms of the GNU General Public License as published by the
+% Free Software Foundation; either version 2.  of the License, or (at your
+% option) any later version.
+%
+% This program is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+% Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+\documentclass[10pt,a4paper]{article}
+\usepackage{times}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\usepackage[latin1,utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{tabularx}
+\usepackage{needspace}
+\usepackage{esdiff}
+\usepackage{physics}
+\usepackage{xspace}
+\usepackage{html}
+\usepackage{version}
+
+%\parindent 0cm
+
+\newlength{\firstcol}
+\setlength{\firstcol}{.35\textwidth}
+\newlength{\secondcol}
+\setlength{\secondcol}{.65\textwidth}
+
+\newlength{\mylength}
+
+\newenvironment{falign}%
+{\setlength{\fboxsep}{15pt}
+\setlength{\fboxrule}{0.5pt}
+\setlength{\mylength}{\textwidth}
+\addtolength{\mylength}{-2\fboxsep}
+\addtolength{\mylength}{-2\fboxrule}
+\Sbox
+\minipage{\mylength}%
+  \setlength{\abovedisplayskip}{-2\lineskip}
+	\setlength{\belowdisplayskip}{-2\lineskip}
+\align}%
+{\endalign\endminipage\endSbox
+\[\fbox{\TheSbox}\]}
+
+\newcommand*{\Eq}[1]{Eq.~(#1)}
+\newcommand*{\Eqs}[1]{Eqs.~(#1)}
+
+\newcommand*{\matlab}{\textsf{Matlab}\xspace}
+\newcommand*{\mgfas}{\textsf{Mgfas}\xspace}
+\newcommand*{\mudpack}{\textsf{Mudpack}\xspace}
+\newcommand*{\mudfas}{\textsf{Mudfas}\xspace}
+\newcommand*{\picsim}{\textsf{PicSim}\xspace}
+
+\newcommand{\CIC}{\renewcommand{\CIC}{CIC\xspace}Cloud-In-Cell (CIC)\xspace}
+\newcommand{\PIC}{\renewcommand{\PIC}{PIC\xspace}Particle-In-Cell (PIC)\xspace}
+\newcommand{\PM}{\renewcommand{\PM}{PM\xspace}Particle-Mesh (PM)\xspace}
+
+
+\newcommand{\sump}[1]{\sum_{0{<}#1{<}\Delta X}}
+\renewcommand{\wr}[1]{\mathop{W_{\mathrm{right}}}\nolimits(#1)}
+\newcommand{\wl}[1]{\mathop{W_{\mathrm{left}}}\nolimits(#1)}
+
+\newcommand{\mycomment}[1]{}
+
+\renewcommand{\floatpagefraction}{.9}
+\renewcommand{\textfraction}{.1}
+\renewcommand{\topfraction}{.8}
+\renewcommand{\bottomfraction}{.8}
+
+%\def\tablesize{\footnotesize}
+\def\tablesize{\small}
+
+\bibliographystyle{plainnat}
+
+\title{\picsim: a suite of 5D/6D Particle-In-Cell\\ plasma simulation codes\\
+version~\version}
+\author{Patrick Guio}
+\date{\normalsize$ $Date: 2013/03/15 17:33:12 $ $,~ $ $Revision: 1.17 $ $}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+\picsim is a suite of 5D (i.e.\ 2R+3V) and 6D (3R+3V) electrostatic collision
+less plasma \PIC simulation codes \citep{dawson:1983,birdsall:1985}.  The
+development of \picsim started in 2000, enhancement and new features are
+added on a regular basis.
+
+Each code solves the dynamic (in continuous 5D and 6D phase space) of charged
+macro-particles in a Lagrangian frame subject to internal and external
+forces, the internal electrostatic field is updated self-consistently on a
+fixed Eulerian mesh This model that includes interactions of particles only
+through the average fields are called Particle-Mesh (PM).  \picsim allows
+external force on the particles driven by external electromagnetic, electric
+and/or gravitation fields. The macro particles are organised in species
+specified by their mass and charge as well as their density, mean velocity
+and temperature and other control parameters for their temporal drive as well
+as boundary conditions.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{pic_cycle}
+\end{center}
+\caption[]{The basic cycle of a \PIC simulation.}
+\label{fig:pic_cycle}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{pic_grid}
+\end{center}
+\caption[]{Sketch of the relation between particle charge $q$ and mesh charge 
+density $\rho$.}
+\label{fig:pic_grid}
+\end{figure}
+
+Fig.~\ref{fig:pic_cycle} and \ref{fig:pic_grid} sketches the basic principle
+of the \PIC algorithm.
+In Fig.~\ref{fig:pic_cycle} the basic cycle is illustrated and consists of four
+operations performed at each iteration: (i) the particle weighting where
+macro particle charge $q$ is deposited onto the charge density grid
+$\rho_{ij}$/$\rho_{ijk}$ using a first order linear weighting scheme,
+the \CIC scheme (Fig.~\ref{fig:pic_grid});
+(ii) the field solver that provides the electrostatic potential $\Phi$
+and electric field $\vec{E}$ on the mesh using the multigrid
+method \citep{wesseling:1991}; (ii) the field weighting (reciprocal of the
+particle weighting) where forces given on the grid are interpolated
+to the position of the particles; and (iv) the particle mover that integrate
+Newton second law equation using the leap frog method.
+
+The code suite consists of several programs for different approximations and
+are available for both 5D and 6D phase space.
+
+Tables~\ref{table:scieinfo} and \ref{table:techinfo} presents a summary of
+scientific information and technical details.
+
+%Table with scientific information
+\begin{table}[ht]
+\caption{Scientific information about the code}
+\label{table:scieinfo}
+\vspace{2mm}
+\begin{footnotesize}
+%\begin{tabular}{|p{\firstcol}|p{\secondcol}|}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+Class of phenomena that can be studied  &
+a) Linear/nonlinear plasma wave-particle interactions, wave modes properties
+propagation and saturation.
+Low frequency electrostatic waves in magnetised/unmagnetised
+and homogeneous/inhomogeneous plasmas subject to external forces,
+and versatile configuration of species.\\
+& b) Beam plasma interactions, phase space studies (vortices,
+self-organised and solitary structures).\\
+& c) Wave radiation pattern and wake structure from point charged (dust)
+particle and finite size obstacle in plasma.\\
+& c) Linear/nonlinear wave modes in dusty plasma.\\
+\hline
+%\multirow{Input parameters for the model}          & a) Object: 
+Input parameters for the model          &
+Note that all parameters have a default value and need not to be provided.
+A list of all options together with information is provided by giving the
+\texttt{--help} option to the command line. All options can be parsed
+through a configuration file and can be redefined on the fly on the command
+line\\
+&
+a) Plasma setup
+\begin{itemize}
+\item A list of names for the species to be included in the simulation
+(several
+species classes are available: background, beam, driven background/beam,
+non homogeneous driven background).
+\item For each species included, properties have to be set up
+\begin{itemize}
+\item Charge and mass
+\item Density, drift velocity vector and independent temperature for
+each direction.
+\item Boundary conditions.
+\item Geometry and spatial extent.
+\item More\ldots
+\end{itemize}
+\end{itemize}
+\\
+ & b)  Simulation setup
+\begin{itemize}
+\item Simulation box dimension
+\item Parameters for the multigrid solver (grid size, tolerance, boundary
+conditions, max number of cycle, interpolation type, number of pre/post
+smoothing)
+\item Timestep and number of iterations.
+\item Average number of simulation macro particles per unit volume cell
+($\Lambda$ plasma parameter).
+\item Boundary conditions for fields and particles.
+\end{itemize}
+\\
+ & c)  Diagnostic setup
+\begin{itemize}
+\item Time specifications for the different diagnostics classes.
+\item Enable/disable switch for most diagnostics.
+\item Highly configurable setup for an arbitrary number of phase space
+diagnostics.
+\item Highly configurable setup for an arbitrary number of spectral
+diagnostics.
+\end{itemize}\\
+\hline
+Output of the model                     &
+All output are stored in a HDF4 file using the Scientific Data Set (SDS)
+which supports multi-dimensional gridded data with meta-data including
+support
+for an unlimited dimension.
+\begin{itemize}
+\item 2D/3D gridded data (density, potential) as function of time.
+\item High resolution slice of gridded data.
+\item Phase space diagnostics.
+\item Moments diagnostics.
+\item Spectral diagnostics ($S(k)$ and $S(k,\omega)$)
+\item Log written including derived physical and numerical parameters,
+simulation details, misc. diagnostics, etc.
+\end{itemize}
+\\
+\hline
+%\end{tabular}
+\end{tabularx}
+\end{footnotesize}
+\end{table}
+
+%Table with technical details
+\begin{table}[ht]
+\caption{Technical details about the code}
+\label{table:techinfo}
+\vspace{2mm}
+\begin{footnotesize}
+%\begin{tabular}{|p{\firstcol}|p{\secondcol}|}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+Language the code is written in  & C++ \\
+\hline
+Basic requirements (memory, additional libraries, etc...)  & The code is
+written in modern standard C++ and uses extensively the Standard Template
+Library (STL). Configuration for different platforms is made easy by using
+the GNU autotools
+(\htmladdnormallink{autoconf}{http://www.gnu.org/software/autoconf},
+\htmladdnormallink{automake}{http://www.gnu.org/software/automake/} and
+\htmladdnormallink{libtool}{http://www.gnu.org/software/libtool/}).
+It requires the following open source and freely available
+libraries (available as package on most Linux distributions)
+\begin{itemize}
+\item \htmladdnormallink{Blitz++}{http://www.oonumerics.org/blitz}
+\item \htmladdnormallink{HDF4}{http://www.hdfgroup.org/products/hdf4}
+\item \htmladdnormallink{FFTW}{http://www.fftw.org} (version 2 or 3)
+\end{itemize}
+It is also MPI-enabled and tested with both
+\htmladdnormallink{MPICH2}{http://www.mcs.anl.gov/mpi/mpich2} and
+\htmladdnormallink{OpenMPI}{http://www.open-mpi.org}
+\\
+\hline
+%\multirow{List of tested compilers/platforms} & gcc (4.6) x86-64 (Ubuntu
+%11.10) \\
+List of tested compilers/platforms & GNU g++ (4.x) on i386-linux \\
+ & Intel icpc (12.x) on i386-linux, x86-64-linux and ia64-linux  \\
+ & pathScale pathCC on i386-linux and x86-64-linux  \\
+ & Portland pgCC on x86-64-linux  \\
+ & IBM xlC (10.x) on SP6 \\
+\hline
+Team of developers/maintainers & Patrick Guio \\
+\hline
+Basic instructions/policy to use it &
+\picsim is not open and not distributed outside of the team. Some details of
+the code are published in several scientific articles in international
+journals.
+Simulation run can be performed on request. \\
+\hline
+References & \picsim simulations are published in nine papers
+\begin{itemize}
+\item Effect of a temperature gradient on low-frequency ion modes
+\citep{guio:2001, guio:2010}
+\item Beam particle interaction and organised structures
+\citep{daldorff:2001,guio:2003a}
+\item Waves and wake pattern caused by charged dust
+\citep{guio:2003b,guio:2008a}
+\item Waves, wake pattern and organised structures caused by finite size
+obstacle \citep{guio:2004,guio:2005}
+\end{itemize}\\
+\hline
+\end{tabularx}
+%\end{tabular}
+\end{footnotesize}
+\end{table}
+
+
+\section{Model equations}
+
+\subsection{Electrostatic}
+
+Let us consider for instance \picsim{i} which is an hybrid \PIC code that has
+been widely used for publication where the electrons are represented as a
+fluid with different approximation available (isothermally Boltzmann
+distributed with temperature $\Te$ as well as deviation from that state)
+while the ion populations are particles. In this case the self-consistent
+electrostatic potential $\Phi$ is related to the species densities $n_j$ with
+the following nonlinear Poisson equation.
+\begin{falign}
+\lapl[r]\Phi&=-\frac{e}{\epso}
+\left(\sum_iZ_in_i-n_e\exp\frac{e\Phi}{\kB\Te}\right)\\
+\vec{E}&=-\grad[r]{\Phi}
+\end{falign}
+
+The same set of equations are solved numerically in the particle mover,
+i.e.\ for each particle of species $i$, the velocity
+and position are given by
+\begin{falign}
+\diff{\vec{v}_i}{t}&=\frac{Z_ie}{m_i}
+\left(\vec{E}+\vec{v}_i\cross\vec{B}\right)+\vec{G}\\
+\diff{\vec{r}_i}{t}&=\vec{v}_i
+\end{falign}
+where \vec{B} is an externally imposed magnetic field and \vec{G} is
+an externally imposed gravitational field.
+Note that the internal gravity field \vec{g} of the system can
+be added to \vec{G} by solving Gauss's law for gravity
+\begin{falign}
+\lapl[r]\varphi&=-4\pi G\left(\sum_in_i\right)\\
+\vec{g}&=-\grad[r]{\varphi}
+\end{falign}
+
+
+\subsection{Dimensionless variables}
+
+Let us define the mass $m_0$, density $n_0$ and the temperature $T_0$ and 
+their dimensionless counterparts $\mu=m/m_0$, $\rho=n/n_0$ and
+$\theta=T/T_0$. We can derive the corresponding thermal velocity $v_0$, 
+plasma frequency $\omega_0$, Debye length $\lambda_0$ and plasma
+parameter $\Lambda_0$
+
+\begin{align*}
+v_0&=\left(\frac{\kB T_0}{m_0}\right)^\frac{1}{2}, &
+\omega_0&=\left(\frac{n_0e^2}{\epso m_0}\right)^\frac{1}{2}, &
+\lambda_0&=\frac{v_0}{\omega_0}=
+\left(\frac{\epso\kB T_0}{n_0e^2}\right)^\frac{1}{2}, &
+\Lambda_0&=\lambda_0^d n_0
+\end{align*}
+where $d$ is the spatial dimension.
+
+The following dimensionless variables are then defined
+\begin{align*}
+\vec{\xi}&=\frac{\vec{r}}{\lambda_0}, &
+\vec{\psi}&=\frac{\vec{v}}{v_0}, &
+\tau&=\omega_0 t,
+\end{align*}
+and the relation between the differential operators are
+\begin{align*}
+\diff{\vec{r}}{t}&=\lambda_0\omega_0\diff{\vec{\xi}}{\tau}=
+v_0\diff{\vec{\xi}}{\tau}, &
+\grad[r]&=\frac{1}{\lambda_0}\grad[\xi], & 
+\lapl[r]&=\frac{1}{\lambda_0^2}\lapl[\xi], &
+\diff{v}{t}&=v_0\omega_0\diff{\vec{\psi}}{\tau}
+\end{align*}
+
+The model equations can be rewritten 
+\begin{align}
+\frac{e}{\kB T_0}\lapl[\xi]\Phi&=
+-\sum_iZ_i\rho_i+\rho_e\exp\frac{e\Phi}{\kB\Te}\\
+\vec{E}&=-\frac{1}{\lambda_0}\grad[\xi]\Phi 
+\end{align}
+and
+\begin{align}
+v_0\omega_0\diff{\vec{\psi}_i}{\tau}&=\frac{eZ_i}{m_i}
+\left(\vec{E}+v_0\vec{\psi}_i\cross\vec{B}\right)+\vec{G}\\
+\lambda_0\omega_0\diff{\vec{\xi}_i}{\tau}&=v_0\vec{\psi}_i
+\end{align}
+
+Posing
+\begin{align*}
+\Phi_0&=\frac{\kB T_0}{e},&
+\phi&=\frac{\Phi}{\Phi_0} &\\
+E_0&=\frac{\Phi_0}{\lambda_0},&
+\vec{\epsilon}&=\frac{\vec{E}}{E_0} &\\
+B_0&=\left(\frac{n_0m_0}{\epso}\right)^\frac{1}{2},&
+\vec{\Omega_0}&=\frac{e}{m_0}\vec{B},&
+\vec{\beta}&=\frac{\vec{B}}{B_0}=\frac{\vec{\Omega_0}}{\omega_0} &\\
+G_0&=v_0\omega_0, &
+\vec{\zeta}&=\frac{\vec{G}}{G_0}
+\end{align*}
+
+leads to the following normalised model equations
+\begin{falign}
+\lapl[\xi]\phi&=-\sum_iZ_i\rho_i+\rho_e\exp\frac{\phi}{\theta_e}\\
+\vec{\epsilon}&=-\grad[\xi]{\phi}\\
+\diff{\vec{\psi}_i}{\tau}&=\frac{Z_i}{\mu_i}
+\left(\vec{\epsilon}+\vec{\psi}_i\cross\vec{\beta}\right)+
+\vec{\zeta}\\
+\diff{\vec{\xi}_i}{\tau}&=\vec{\psi}_i
+\end{falign}
+
+\subsection{Electromagnetic}
+
+Let us consider Gauss' law and Ampère's law from Maxwell equations
+which couples the electromagnetic observables \vec{E} and \vec{B} to the 
+source terms \vec{J} and $\rho$, formally
+\begin{align}
+\divg[r]\vec{E}&= \frac{\rho}{\epso},\label{eq:gauss1}\\
+\curl[r]\vec{B}&=\muo\vec{J}+\muo\epso\pdiff{t}\vec{E}\label{eq:ampere}
+\end{align}
+
+These equations hide a dependency between the densities $\rho$ and \vec{J}. 
+By evaluating the divergence of Ampère's law \Eq{\ref{eq:ampere}} and adding
+the time derivative of Gauss law \Eq{\ref{eq:gauss1}}, we obtain
+an equation for conservation of charge
+\begin{align}
+\pdiff{t}\rho + \divg[r]\vec{J} = 0,
+\end{align}
+which means that the change of the density $\rho$ is caused by the
+sources of the current density \vec{J}.
+
+Next, let us consider Gauss' second law from Maxwell equations, 
+formally
+\begin{align}
+\divg[r]\vec{B}=0.\label{gauss2}
+\end{align}
+The mathematical structure of this equation means that \vec{B} can be derived
+from a vector potential \vec{A}, formally
+\begin{align}
+\vec{B}=\curl[r]{A}.\label{eq:rot}
+\end{align}
+
+Finally, let us consider Faraday's law from Maxwell equations, formally
+\begin{align}
+\curl[r]{\vec{E}}=-\pdiff{t}\vec{B},\label{eq:faraday}
+\end{align}
+and substitute \vec{B} by the vector potential definition, formally
+\begin{align}
+\curl[r]{(\vec{E} + \pdiff{t}\vec{A})}=\vec{0}.
+\end{align}
+This mathematical
+structure allow to represent $\vec{E} + \pdiff{t}\vec{A}$ as some gradient,
+formally
+\begin{align}
+\vec{E} + \pdiff{t}\vec{A} = -\grad[r]{\Phi}.\label{eq:grad}
+\end{align}
+
+Thus, both \vec{E} and \vec{B} can be represented by means of some potentials
+\vec{A} and $\Phi$ as follows
+\begin{align}
+\vec{E}&=-(\grad[r]\Phi+\pdiff{t}\vec{A}),\label{eq:elecpot}\\
+\vec{B}&=\curl[r]\vec{A}.\label{eq:magpot}
+\end{align}
+
+\subsubsection{Gauge transformation}
+Introducing an arbitrary function $\psi$, the identity
+\begin{align}
+\grad[r]{\Phi}+\pdiff{t}\vec{A}=
+\grad[r]{(\Phi-\pdiff{t}\psi)}+\pdiff{t}(\vec{A}+\grad[r]{\psi})
+\end{align}
+shows that the substitutions
+\begin{align}
+\Phi\quad\rightarrow\quad
+\Phi^\prime  & = \Phi-\pdiff{t}\psi\label{eq:subst1}\\
+\vec{A}\quad\rightarrow\quad
+\vec{A}^\prime & = \vec{A} + \grad[r]{\psi},\label{eq:subst2}
+\end{align}
+generates equivalent potentials $\Phi^\prime$ and $\vec{A}^\prime$ as 
+$\Phi$ and $\vec{A}$ for the representation of the observables
+\vec{E}, \vec{B} for any arbitrary function $\psi$. 
+Also the observables \vec{J} and $\rho$  given by
+\Eqs{\ref{eq:gauss1}--\ref{eq:ampere}} remain unchanged under the
+transformations \Eqs{\ref{eq:subst1}--\ref{eq:subst2}}.
+
+The transformations \Eqs{\ref{eq:subst1}--\ref{eq:subst2}} leave 
+the observables \vec{E}, \vec{B}, \vec{J} and 
+$\rho$ invariant for any arbitrary functions $\psi$. 
+The substitutions, as defined by \Eqs{\ref{eq:subst1}--\ref{eq:subst2}},
+are called a gauge transformation with the generating function $\psi$.
+
+Let us now assume that the source densities $\rho$ and \vec{J} are given. 
+We still have to show the existence of potentials \vec{A}  and $\Phi$, 
+which fulfil the Maxwell equations \Eqs{\ref{eq:gauss1}--\ref{eq:ampere}}.
+Inserting the potential representations \Eqs{\ref{eq:elecpot}--\ref{eq:magpot}}
+into Ampère's law \Eq{\ref{eq:ampere}} yields 
+\begin{align}
+\curl[r]{\left(\curl[r]{\vec{A}}\right)} + 
+\muo\epso\left(\pdiff[2]{t}\vec{A}+\grad[r]{\left(\pdiff{t}\Phi\right)}\right)
+= \muo\vec{J}.
+\end{align}
+We make use of the identity 
+$\curl\left(\curl\vec{A}\right)=\grad\left(\divg\vec{A}\right)-\lapl\vec{A}$
+and obtain
+\begin{align}
+\muo\epso\pdiff[2]{t}\vec{A} - \lapl[r]\vec{A} + 
+\grad[r]\left(\divg[r]\vec{A} + \muo\epso\pdiff{t}\Phi\right) = 
+\muo\vec{J}.\label{eq:amperealt}
+\end{align}
+
+Analogously inserting the representations 
+\Eqs{\ref{eq:elecpot}--\ref{eq:magpot}} into Gauss' law \Eq{\ref{eq:gauss1}},
+we obtain
+\begin{align}
+-\left(\lapl[r]\Phi + \divg[r]\left(\pdiff{t}\vec{A}\right)\right)
+= \frac{\rho}{\epso}, 
+\end{align}
+or 
+\begin{align}
+\muo\epso\pdiff[2]{t}\Phi - \lapl[r]\Phi - 
+\pdiff{t}\left(\divg[r]\vec{A} + \muo\epso\pdiff{t}\Phi\right)
+=  \frac{\rho}{\epso}.\label{eq:gauss1alt}
+\end{align}
+
+It is then easy to check that the application of the gauge transformation
+\Eqs{\ref{eq:subst1}--\ref{eq:subst2}} transforms 
+\Eq{\ref{eq:amperealt}} and \Eq{\ref{eq:gauss1alt}}  into
+\begin{align}
+\muo\epso\pdiff[2]{t}\vec{A}^\prime - \lapl[r]\vec{A}^\prime + 
+\grad[r]\left(\divg[r]\vec{A}^\prime + \muo\epso\pdiff{t}\Phi^\prime\right) & = 
+\muo\vec{J},\label{eq:amperealt1}\\
+\muo\epso\pdiff[2]{t}\Phi^\prime - \lapl[r]\Phi^\prime - 
+\pdiff{t}\left(\divg[r]\vec{A}^\prime + \muo\epso\pdiff{t}\Phi^\prime\right)
+& =  \frac{\rho}{\epso},\label{eq:gauss1alt1}
+\end{align}
+i.e.\ both equations are gauge invariant.
+
+At the present state, it is not possible to  guarantee the existence of
+solutions \vec{A} and $\Phi$ of these coupled differential equations for given
+source functions $\rho$ and \vec{J}. 
+However, using the freedom of gauge transformations it
+is possible to show that the equations can be transformed in a decoupled
+version, which is solvable. 
+This implies that \Eq{\ref{eq:amperealt1}} and \Eq{\ref{eq:gauss1alt1}} 
+are solvable too.
+
+\subsubsection{Coulomb gauge}
+The problem in solving \Eq{\ref{eq:amperealt}} and \Eq{\ref{eq:gauss1alt}}
+is their coupling. One way of decoupling them is to introduce the additional
+condition, called the Coulomb (or transverse) gauge formulation)
+\begin{align}
+\divg[r]\vec{A}=0, \label{eq:coulombgauge}
+\end{align}
+i.e.\ we have to remove the term $\divg[r]\vec{A}$ in
+\Eq{\ref{eq:gauss1alt}} by applying
+an appropriate gauge transformation. Since
+\Eqs{\ref{eq:subst1}--\ref{eq:subst2}} transform
+\begin{align}
+\divg[r]\vec{A} \quad \rightarrow \quad
+\divg[r]\vec{A}^\prime = \divg[r]\vec{A} + \lapl[r]\psi
+\end{align}
+we merely have to choose the generating function $\psi$ as a solution of 
+\begin{align}
+\lapl[r]\Psi = - \divg[r]\vec{A}.\label{eq:psicond}
+\end{align}
+This gauge transformation transforms \Eq{\ref{eq:gauss1alt}} into 
+\begin{align}
+\muo\epso\pdiff[2]{t}\Phi^\prime - \lapl[r]\Phi^\prime -
+\muo\epso\pdiff[2]{t}\Phi^\prime  = \frac{\rho}{\epso}, 
+\end{align}
+or simply
+\begin{align}
+\lapl[r]\Phi^\prime = -\frac{\rho}{\epso}, 
+\end{align}
+which is the Poisson equation with the well-known integral solution
+\begin{align}
+\Phi^\prime(\vec{x},t) = \frac{1}{4\pi\epso}
+\int\frac{\rho(\vec{y},t)}{|\vec{x}-\vec{y}|} d\vec{y}. 
+\end{align}
+
+Therefore $\Phi^\prime$ is now a known function for the other equation, 
+which can be rewritten as
+\begin{align}
+\muo\epso\pdiff[2]{t}\vec{A}^\prime - \divg[r]\vec{A}^\prime =
+\muo\vec{J}^\ast, 
+\end{align}
+where $\vec{J}^\ast = \vec{J}-\epso\grad[r](\pdiff{t}\Phi)$ is a known function.
+Again a solution of this equation in integral form is known
+\begin{align}
+\vec{A}(\vec{x},t) = \frac{\muo}{4\pi} 
+\int\frac{\vec{J}^\ast(\vec{y},t-|\vec{x}-\vec{y}|/c)}{|\vec{x}-\vec{y}|}
+d\vec{y}.
+\end{align}
+
+However, something is left. One has to show that the solution
+\Eq{\ref{eq:psicond}} fulfils the condition \Eq{\ref{eq:coulombgauge}}, i.e.\
+that $\divg\vec{A} = 0$, which is a rather technical proof and is left out.
+
+\subsubsection{Lorenz gauge}
+The second method of decoupling \Eq{\ref{eq:amperealt}} and
+\Eq{\ref{eq:gauss1alt}} is more symmetrical. Let us introduce the so-called
+Lorenz convention
+\begin{align}
+\divg[r]\vec{A}+\muo\epso\pdiff{t}\Phi = 0.\label{eq:lorenzconv}
+\end{align}
+
+This goal can be attained by an appropriate gauge transformation. Under the
+gauge transformations \Eqs{\ref{eq:subst1}--\ref{eq:subst2}} we have
+\begin{align}
+\divg[r]\vec{A}+\muo\epso\pdiff{t}\Phi \quad\rightarrow\quad
+\divg[r]\vec{A}+\muo\epso\pdiff{t}\Phi+
+\left(\lapl[r]\Psi - \muo\epso \pdiff[2]{t}\Psi\right)
+\end{align}
+Thus if we take the generating function $\Psi^{\prime\prime}$ to be a solution
+of the inhomogeneous wave equation
+\begin{align}
+\muo\epso\pdiff[2]{t}\Psi^{\prime\prime}-\lapl[r]\Psi^{\prime\prime}
+= \divg[r]\vec{A}+\muo\epso\pdiff{t}\Phi
+\end{align}
+we obtain equivalent potentials $\vec{A}^{\prime\prime}$ and
+$\Phi^{\prime\prime}$ that fulfil
+\begin{align}
+\muo\epso\pdiff[2]{t}\vec{A}^{\prime\prime}-\lapl[r]\vec{A}^{\prime\prime} 
+&= \muo\vec{J},\\
+\muo\epso\pdiff[2]{t}\Phi^{\prime\prime}-\lapl[r]\Phi^{\prime\prime}
+&= \frac{\rho}{\epso}.
+\end{align}
+And both equations have solutions in integral form
+\begin{align}
+\vec{A}^{\prime\prime} &= \frac{\muo}{4\pi} 
+\int\frac{\vec{J}(\vec{y},t-|\vec{x}-\vec{y}|/c)}{|\vec{x}-\vec{y}|},
+\label{eq:Alorenzsol}\\
+\Phi^{\prime\prime} &= \frac{1}{4\pi\epso}
+\int\frac{\rho(\vec{y},t)}{|\vec{x}-\vec{y}|} d\vec{y}.
+\label{eq:philorenzsol}
+\end{align}
+And again the question arises whether the solutions 
+\Eqs{\ref{eq:Alorenzsol}--\ref{eq:philorenzsol}} fulfil the Lorenz
+convention \Eq{\ref{eq:lorenzconv}}. 
+
+\subsubsection{Gauge equivalence}
+On first look it seems doubtful whether the Coulomb gauge and the Lorenz
+gauge would yield the same observables \vec{E} and \vec{B} for identical
+sources \vec{J} and $\rho$. However it is easy to show that both solutions 
+$\vec{A}^\prime, \Phi^\prime$ and $\vec{A}^{\prime\prime}, \Phi^{\prime\prime}$
+are transformable into each other by a gauge transformation.
+
+Let $(\vec{E},\vec{B})(\vec{A},\Phi)$ denote the observables \vec{E} and
+\vec{B} derived from the potentials \vec{A} and $\Phi$ by \Eq{\ref{eq:rot}}
+and \Eq{\ref{eq:grad}}. Then   due to the gauge equivalence between 
+$\vec{A},\Phi$ and $\vec{A}^\prime,\Phi^\prime$ we have
+\begin{align}
+(\vec{E},\vec{B})(\vec{A}^\prime,\Phi^\prime)=(\vec{E},\vec{B})(\vec{A},\Phi)
+\end{align}
+and due to the gauge equivalence between $\vec{A},\Phi$ and
+$\vec{A}^{\prime\prime},\Phi^{\prime\prime}$ 
+\begin{align}
+(\vec{E},\vec{B})(\vec{A}^{\prime\prime},\Phi^{\prime\prime})=
+(\vec{E},\vec{B})(\vec{A},\Phi)
+\end{align}
+and therefore
+\begin{align}
+(\vec{E},\vec{B})(\vec{A}^\prime,\Phi^\prime)=
+(\vec{E},\vec{B})(\vec{A}^{\prime\prime},\Phi^{\prime\prime})
+\end{align}
+This result is a special case of the general result on gauge invariance of
+the observables that we developed in the previous sections.
+
+The possibility of representing the observables of the Maxwell theory by
+different  (gauge-equivalent) potentials means that within the Maxwell
+theory the electrodynamic potential \vec{A} and $\Phi$ possess no physical
+reality. 
+
+
+\subsubsection{Old stuff}
+\begin{falign}
+\lapl[r]\Phi+\pdiff{t}\left(\divg[r]\vec{A}\right)&=
+-\frac{e}{\epso}\left(\sum_iZ_in_i-n_e\exp\frac{e\Phi}{\kB\Te}
+\right)\label{eq:gauss}\\
+\lapl[r]\vec{A}-\muo\epso\pdiff[2]{t}\vec{A}&=-\muo\vec{J}+
+\grad[r]\left(\divg[r]\vec{A}+
+\muo\epso\grad[r]\pdiff{t}\Phi\right)\\
+\vec{E}&=-\grad[r]\Phi-\pdiff{t}\vec{A}\\
+\vec{B}&=\curl[r]\vec{A}
+\end{falign}
+The Coulomb (or transverse) gauge formulation is used. In this gauge,
+$\divg[r]\vec{A}=0$.
+\begin{falign}
+\lapl[r]\Phi&=-\frac{e}{\epso}
+\left(\sum_iZ_in_i-n_e\exp\frac{e\Phi}{\kB\Te}\right)\\
+\lapl[r]\vec{A}-\muo\epso\pdiff[2]{t}\vec{A}&=-\muo\vec{J}+
+\muo\epso\grad[r]\pdiff{t}\Phi
+\end{falign}
+and taking the gradient of Ampère's law leads to
+\begin{falign}
+\lapl[r]\Phi&=-\frac{e}{\epso}
+\left(\sum_iZ_in_i-n_e\exp\frac{e\Phi}{\kB\Te}\right)\\
+\lapl[r]\pdiff{t}\Phi&=\frac{1}{\epso}\divg[r]\vec{J}
+\end{falign}
+
+\section{Density calculation}
+
+Let us assume a $n$-points regular grid $G_n=\{X_1,\ldots, X_n\}$ with 
+space interval $\Delta X = (X_n-X_1)/(n-1)$ on the domain $\Omega=[X_1, X_n]$. 
+
+We want to estimate the density $\rho(G_n)$ of a set of particles $P$ 
+where particle $P_j$ has coordinate $x_j$.
+
+The density $\rho_i(X_i)$ at grid point $X_i$ not on the boundary 
+can be written
+\begin{falign}
+\rho(X_i)=\sump{x_j{-}X_i}\wl{x_j{-}X_i}+\sump{X_i{-}x_j}\wr{X_i{-}x_j}
+\end{falign}
+
+For a first-order weighting (Cloud-In-Cell method), the two weights 
+functions $W_{\mathrm{left}}$  and $W_{\mathrm{right}}$ are defined as
+\begin{align*}
+\wl{x}&=\frac{x}{\Delta X},& \wr{x}&=1-\frac{x}{\Delta X}
+\end{align*}
+
+\subsection{Density at boundary points for periodic condition}
+For periodic boundary condition over the domain $\Omega=[X_1, X_n]$, we have
+\begin{equation}
+\rho(x{+}X_n{-}X_1)=\rho(x), \qquad\forall x
+\end{equation}
+
+Applying the periodic condition at the boundary points leads to
+\begin{falign}
+\rho(X_1)=\rho(X_n)=\sump{x_j{-}X_n}\wl{x_j{-}X_n}+
+\sump{X_1{-}x_j}\wr{X_1{-}x_j}
+\end{falign}
+
+\subsection{Density at boundary points for Dirichlet condition}
+When the potential $\phi=0$ at the boundary, we call  
+the finite screen theorem and says that in order to keep the potential to
+zero the charge distribution on one side of the boundary needs to be the 
+opposite of the charge distribution of the other side, therefore
+\begin{falign}
+\rho(X_1)&=-\rho_e\\
+\rho(X_n)&=-\rho_e
+\end{falign}
+
+\subsection{Density at boundary points for Neumann condition}
+When the potential at the boundary is such that
+\begin{align}
+\diffp{\phi}{x}(X_1)&=f(X_1)\\
+\diffp{\phi}{x}(X_n)&=f(X_n)
+\end{align}
+
+With the Boltzmann approximation
+\begin{equation}
+\frac{n}{n_0}\sim\frac{e\phi}{\Te}
+\end{equation}
+One can write
+\begin{align}
+\dint{n}=\frac{en_0}{\Te}\diffp{\phi}{x}\dint{x}
+\qquad\Rightarrow\qquad
+n(\Delta X)=n_0(1+\frac{e}{\Te}\diffp{\phi}{x}\Delta X)
+\end{align}
+
+
+\begin{falign}
+\rho_{\mathrm{left}}(X_1)&=\sump{x_j{-}X_1}\wr{x_j{-}X_1}\left(2-
+\frac{e}{\Te}f(X_1)\Delta X\right)\\
+\rho_{\mathrm{right}}(X_n)&=\sump{X_n{-}x_j}\wl{X_n{-}x_j}\left(2+
+\frac{e}{\Te}f(X_n)\Delta X\right)
+\end{falign}
+
+In the case of a gravitation field $G$, the equilibrium is defined by 
+\begin{equation}
+\phi=\frac{MG}{e}z \qquad\Rightarrow\qquad\diffp{\phi}{x}(X_1)=
+\diffp{\phi}{x}(X_n)=\frac{MG}{e}
+\end{equation}
+and
+\begin{falign}
+\rho_{\mathrm{left}}(X_1)&=\sump{x_j{-}X_1}\wr{x_j{-}X_1}\left(2-
+\frac{MG}{\Te}\Delta X\right)\\
+\rho_{\mathrm{right}}(X_n)&=\sump{X_n{-}x_j}\wl{X_n{-}x_j}\left(2+
+\frac{MG}{\Te}\Delta X\right)
+\end{falign}
+
+\section{Energy}
+
+\subsection{Energy equation}
+The 1-d Vlasov equation for the ion species $i$ with distribution function
+$f_i$ is multiplied by $1/2m_iv^2$
+and integrated over the phase space $(x,v)$ to give the energy equation
+\begin{equation}
+\diffp{}{t}\iint\frac{1}{2}m_iv^2f_i\dint{x}\dint{v}+
+\int\frac{1}{2}m_iv^3\left[\int\diffp{f_i}{x}\dint{x}\right]
+\dint{v}-\iint\frac{1}{2}Z_iev^2\diffp{\Phi}{x}
+\diffp{f_i}{v}\dint{x}\dint{v}=0
+\end{equation}
+For periodic and insulated systems
+\begin{equation}
+\int\diffp{f_i}{x}\dint{x}=0,\qquad\mbox{i.e.}\qquad
+\left[f_i(x,v,t)\right]_{\Gamma_x}=0
+\end{equation}
+The last term is $v$-integrated (assuming that 
+$[v^2 f_i]_{\Gamma_v}=0$)
+then $x$-integrated (assuming that $[\Phi u]_{\Gamma_x}=0$)
+by part and the energy equation is written
+\begin{align}
+\diffp{}{t}\iint\frac{1}{2}m_iv^2f_i\dint{x}\dint{v}+
+\frac{1}{2}\iint Z_ie2v\diffp{\Phi}{x}f_i\dint{x}\dint{v}&=0\\
+\diffp{}{t}\iint\frac{1}{2}m_iv^2f_i\dint{x}\dint{v}-Z_ie
+\int\Phi\diffp{}{x}\left[\int vf_i\dint{v}\right]\dint{x}&=0
+\end{align}
+The continuity equation for species $i$ (Vlasov equation integrated over
+$v$) is written
+\begin{equation}
+\diffp{}{t}\int f_i\dint{v}+\diffp{}{x}\int vf_i\dint{v}=0
+\end{equation}
+Therefore the energy equation is rewritten
+\begin{equation}
+\diffp{}{t}\iint\frac{1}{2}m_iv^2f_i\dint{x}\dint{v}+Z_ie
+\int\Phi\diffp{}{t}\left[\int f_i\dint{v}\right]\dint{x}=0
+\end{equation}
+The Poisson equation is written
+\begin{equation}
+\diffp[2]{\Phi}{x}=-\frac{e}{\epso}
+\left(\sum_iZ_i\int f_i\dint{v}-n_e\exp\left[\frac{e\Phi}{\kB\Te}\right]\right)
+\end{equation}
+Adding the Vlasov for each species and identifying the terms from Poisson
+equation gives
+\begin{equation}
+\diffp{}{t}\sum_i\iint\frac{1}{2}m_iv^2f_i\dint{x}\dint{v}-
+\int\Phi\diffp{}{t}\left[\epso\diffp[2]{\Phi}{x}\right]\dint{x}+
+\int\Phi\diffp{}{t}\left[en_e\exp\left(\frac{e\Phi}{\kB\Te}\right)\right]
+\dint{x}=0
+\end{equation}
+Applying product time derivation rule on the second term gives
+\begin{align}
+\diffp{}{t}
+\sum_i\iint\frac{1}{2}m_iv^2f\dint{x}\dint{v}&-
+\diffp{}{t}\int\Phi\epso\diffp[2]{\Phi}{x}\dint{x}+
+\int\diffp{\Phi}{t}\epso\diffp[2]{\Phi}{x}\dint{x}+\nonumber\\
+&\int\Phi\diffp{}{t}\left[en_e\exp\left(\frac{e\Phi}{\kB\Te}\right)\right]
+\dint{x}=0\\
+\end{align}
+Integrating by part the second and third terms (assuming 
+$\left[\Phi\diffp{\Phi}{x}\right]_{\Gamma_x}=0$ and 
+$\left[\diffp{\Phi}{t}\diffp{\Phi}{x}\right]_{\Gamma_x}=0$) 
+and applying product time derivation rule on the fourth term
+\begin{align}
+\diffp{}{t}\sum_i\iint\frac{1}{2}m_iv^2f\dint{x}\dint{v}&+
+\diffp{}{t}\int\epso\left(\diffp{\Phi}{x}\right)^2\dint{x}-
+\int\diffp{\Phi}{xt}\epso\diffp{\Phi}{x}\dint{x}-\nonumber\\
+&\diffp{}{t}\int\left(\kB\Te-e\Phi\right)
+n_e\exp\left(\frac{e\Phi}{\kB\Te}\right)\dint{x}=0
+\end{align}
+Since 
+\begin{equation}
+\diffp{\Phi}{xt}\diffp{\Phi}{x}=\frac{1}{2}\left(\diffp{\Phi}{x}\right)^2
+\end{equation}
+
+The energy equation is written
+\begin{falign}
+\diffp{}{t}\left[\sum_i\iint\frac{1}{2}m_iv^2f\dint{x}\dint{v}+\right.&
+\frac{\epso}{2}\int\left(\diffp{\Phi}{x}\right)^2\dint{x}-\nonumber\\
+&\left.\int\left(\kB\Te-e\Phi\right)n_e\exp\left(\frac{e\Phi}{\kB\Te}\right)
+\dint{x}\right]=0
+\end{falign}
+
+\subsection{Kinetic energy}
+The density $n$, drift velocity $\vec{u}$ and temperature $T$ are defined as 
+\begin{align}
+n(\vec{r})&=\int f(\vec{r},\vec{v})\dint{\vec{v}}\\
+\vec{u}(\vec{r})&=\int\vec{v} f(\vec{r},\vec{v})\dint{\vec{v}}\\
+\frac{d}{2}n(\vec{r})\kB T(\vec{r})&=\frac{1}{2}m\int(\vec{v}-\vec{u})^2
+f(\vec{r},\vec{v})\dint{\vec{v}}\\
+&=\frac{1}{2}m\int\vec{v}^2 f(\vec{r},\vec{v})\dint{\vec{v}}
+-\frac{1}{2}mn(\vec{r})u^2(\vec{r}) 
+\end{align}
+where $d=\mathrm{card}(\vec{v})$.
+
+The mean kinetic energy $\mathrm{KE}$ is then defined as
+\begin{equation}
+\mathrm{KE}=\frac{\displaystyle\int\left(n(\vec{r})\kB T(\vec{r})
++\frac{1}{d}mn(\vec{r})u(\vec{r})\right)\dint{\vec{r}}}
+{\displaystyle\int n(\vec{r})\dint{\vec{r}}}
+\end{equation}
+
+For Boltzmann distributed electron, the description is fluid and the 
+three moments $n$, $\vec{u}$ and $\Te$ are given 
+\begin{align}
+\vec{u}&=\vec{0}\\
+n(\vec{r})T(\vec{r})&=n_e
+\exp\left[\frac{e\Phi(\vec{r})}{\kB\Te(\vec{r})}\right]\Te(\vec{r})
+\end{align}
+and
+\begin{falign}
+\mathrm{KE}_e=\kB T_0\frac{\displaystyle
+\int\theta_e\exp\left({\phi/\theta_e}\right)\dint{\vec{\xi}}}
+{\displaystyle\int\exp\left({\phi/\theta_e}\right)\dint{\vec{\xi}}}
+\end{falign}
+
+The ions consists of $N_p$ particles therefore the density distribution
+is represented as 
+\begin{equation}
+f(\vec{r},\vec{v})= \sum_{i=1}^{N_p}
+\dirac{\vec{r}-\vec{R}_i}\dirac{\vec{v}-\vec{V}_i}
+\end{equation}
+which gives
+\begin{align}
+n&=\sum_{i=1}^{N_p}\dirac{\vec{r}-\vec{R}_i}\\
+nT+\frac{1}{d}mnu^2&=&\frac{1}{d}m\sum_{i=1}^{N_p}\vec{v}_i^2
+\dirac{\vec{r}-\vec{R}_i}
+\end{align}
+and
+\begin{falign}
+\mathrm{KE}_i=\kB T_0\frac{\mu}{d}\frac{1}{N_p}\sum_{i=1}^{N_p}\vec{\psi}_i^2 
+\end{falign}
+
+\subsection{Field energy}
+The electric field energy $\mathrm{ESE}$ is defined as
+\begin{equation}
+\mathrm{ESE}=\frac{1}{2}\epso\int\vec{E}^2\dint{\vec{r}}
+\end{equation}
+After an integration by part 
+\begin{falign}
+\mathrm{ESE}=\frac{\kB T_0}{2}\int\phi
+\left[\rho_e\exp\left(\frac{\phi}{\theta_e}\right)-\sum_iZ_i\rho_i\right]
+\dint{\vec{\xi}}
+\end{falign}
+
+\section{Random number generator}
+
+\subsection{Uniform $U(a,b)$}
+\begin{align}
+f(x)&=\frac{1}{b-a}\\
+\mu&=\frac{b+a}{2}\\
+\sigma^2&=\frac{(b-a)^2}{12}
+\end{align}
+
+\subsection{Normal $N(\mu,\sigma)$}
+\begin{equation}
+f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\end{equation}
+
+\subsection{Exponential $E(\lambda)$}
+\begin{align}
+f(x)&=\frac{1}{\lambda}\exp\left(-\frac{x}{\lambda}\right)\\
+\mu&=\lambda\\
+\sigma^2&=\lambda^2
+\end{align}
+
+\subsection{Rayleigh $R(s)$}
+\begin{align}
+f(x)&=\frac{x}{s^2}\exp\left(-\frac{x^2}{2s^2}\right)\\
+\mu&=\sqrt{\frac{\pi}{2}}s\\
+\sigma^2&=2s^2-\mu^2=2\left(1-\frac{\pi}{4}\right)s^2
+\end{align}
+
+\subsection{Flux $F(m,s)$}
+\begin{align}
+f(x)&=\frac{1}{\beta}\frac{x}{\sqrt{2\pi}s}
+\exp\left(-\frac{(x-m)^2}{2s^2}\right)\\
+\beta&=\frac{1}{\sqrt{2\pi}}s\exp\left[-\frac{m^2}{2s^2}\right]+
+\frac{m}{2}\left[1+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\\
+\mu&=\frac{1}{\beta}\left[\frac{m^2+s^2}{2}\left[1+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]+
+\frac{ms}{\sqrt{2\pi}}\exp\left[-\frac{m^2}{2s^2}\right]\right]\\
+\sigma^2&=\frac{1}{\beta}\left[m\frac{m^2+3s^2}{2}
+\left[1+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]+
+s\frac{m^2+2s^2}{\sqrt{2\pi}}\exp\left[-\frac{m^2}{2s^2}\right]\right]-\mu^2
+\end{align}
+
+\subsection{Perturbation $P(m,s,\alpha)$}
+\subsubsection*{Condition $|\alpha|<\sqrt{\frac{\pi}{2}}s\left[
+\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]$}
+\begin{align}
+f(x)&=\frac{1}{\beta}\left[1+\frac{k}{\sqrt{2\pi}s}
+\exp\left[-\frac{(x-m)^2}{2s^2}\right]\right]\\
+k&=2\alpha\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]^{-1}\\
+\beta&=1+\frac{k}{2}\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\\
+\mu&=\frac{1}{\beta}\left[\frac{1}{2}-\frac{ks}{\sqrt{2\pi}}\left[
+\exp\left[-\frac{(1-m)^2}{2s^2}\right]-\exp\left[-\frac{m^2}{2s^2}\right]
+\right]+\right.\nonumber\\
+&\left.\frac{km}{2}\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\right]\\
+\sigma^2&=\frac{1}{\beta}\left[\frac{1}{3}-
+\frac{ks}{\sqrt{2\pi}}\left[(1+m)\exp\left[-\frac{(1-m)^2}{2s^2}\right]-
+m\exp\left[-\frac{m^2}{2s^2}\right]\right]+\right.\nonumber\\
+&\left.k\frac{m^2+s^2}{2}\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\right]-\mu^2
+\end{align}
+
+\subsubsection*{Bivariate perturbation $P(m_x,s_x,m_y,s_y,\alpha)$}
+\begin{align}
+f(x,y)&=\frac{1}{\beta_{xy}}\left[1+\frac{k^2}{{2\pi}s_xs_y}
+\exp\left[-\frac{(x-m_x)^2}{2s_x^2}-\frac{(y-m_y)^2}{2s_y^2}\right]\right]\\
+k^2&=4\alpha\left[\erf\left[\frac{1-m_x}{\sqrt{2}s_x}\right]+
+\erf\left[\frac{m_x}{\sqrt{2}s_x}\right]\right]^{-1}
+\left[\erf\left[\frac{1-m_y}{\sqrt{2}s_y}\right]+
+\erf\left[\frac{m_y}{\sqrt{2}s_y}\right]\right]^{-1}\\
+\beta_{xy}&=1+\frac{k^2}{4}\left[\erf\left[\frac{1-m_x}{\sqrt{2}s_x}\right]+
+\erf\left[\frac{m_x}{\sqrt{2}s_x}\right]\right]
+\left[\erf\left[\frac{1-m_y}{\sqrt{2}s_y}\right]+
+\erf\left[\frac{m_y}{\sqrt{2}s_y}\right]\right]
+\end{align}
+
+Applying Bayes theorem $f(x,y)=f(x)f(y|x)$ leads to
+
+\begin{align}
+f(y|x)&=\frac{1}{\beta_{y|x}}\left[1+\frac{k}{\sqrt{2\pi}s_x}
+\exp\left[-\frac{(x-m_x)^2}{2s_x^2}\right]\frac{k}{\sqrt{2\pi}s_y}
+\exp\left[-\frac{(y-m_y)^2}{2s_y^2}\right]\right]\\
+\alpha_{y|x}&=\frac{1}{\sqrt{2\pi}s_x}
+\exp\left[-\frac{(x-m_x)^2}{2s_x^2}\right]
+2\alpha\left[\erf\left[\frac{1-m_x}{\sqrt{2}s_x}\right]+
+\erf\left[\frac{m_x}{\sqrt{2}s_x}\right]\right]^{-1}\\
+\beta_{y|x}&=1+\frac{k^2}{2}\frac{1}{\sqrt{2\pi}s_x}
+\exp\left[-\frac{(x-m_x)^2}{2s_x^2}\right]
+\left[\erf\left[\frac{1-m_x}{\sqrt{2}s_x}\right]+
+\erf\left[\frac{m_x}{\sqrt{2}s_x}\right]\right]
+\end{align}
+
+
+%\subsubsection*{$\alpha<0$}
+%\begin{align}
+%f(x)=&\frac{1}{\beta}\left[1-\frac{k}{\sqrt{2\pi}s}
+%\left[1-\exp\left[-\frac{(x-m)^2}{2s^2}\right]\right]\right]\\
+%k=&2\alpha\left[-\frac{2\alpha}{\sqrt{2\pi}s}+
+%\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+%\erf\left[\frac{m}{\sqrt{2}s}\right]\right]^{-1}\\
+%\beta=&1-\frac{k}{\sqrt{2\pi}s}+\frac{k}{2}
+%\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+%\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\\
+%\mu=&\frac{1}{\beta}\left[\frac{1}{2}\left[1-\frac{k}{\sqrt{2\pi}s}\right]-
+%\frac{ks}{\sqrt{2\pi}}\left[
+%\exp\left[-\frac{(1-m)^2}{2s^2}\right]-\exp\left[-\frac{m^2}{2s^2}\right]\right]+
+%\right.\\
+%&\left.\frac{km}{2}\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]+
+%\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\right]\\
+%\sigma^2=&\frac{1}{\beta}\left[\frac{1}{3}\left[1-\frac{k}{\sqrt{2\pi}s}\right]-
+%\frac{ks}{\sqrt{2\pi}}\left[(1+m)\exp\left[-\frac{(1-m)^2}{2s^2}\right]-
+%m\exp\left[-\frac{m^2}{2s^2}\right]\right]+\right.\\
+%&\left.k\frac{m^2+s^2}{2}\left[\erf\left[\frac{1-m}{\sqrt{2}s}\right]-
+%\erf\left[\frac{m}{\sqrt{2}s}\right]\right]\right]-\mu^2
+%\end{align}
+
+\section{Tests}
+
+\subsection{Particle kinematics}
+
+\begin{figure}
+\centerline{\includegraphics[width=\columnwidth]{kinetic}}
+\caption{Phase space}
+\label{fig:kinetic}
+\end{figure}
+
+\subsection{Energy conservation}
+
+\begin{figure}
+\centerline{\includegraphics[width=\columnwidth]{energy2d}}
+\caption{Phase space}
+\label{fig:energy2d}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\columnwidth]{energy3d}}
+\caption{Phase space}
+\label{fig:energy3d}
+\end{figure}
+
+\bibliography{abbrevs,research,books}
+
+\clearpage
+
+\appendix
+\section{List of \picsim options}
+
+The options are described by classes.
+\begin{itemize}
+\item \emph{PIC} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item Background
+	\item Beam
+	\item DrivenBackground
+	\end{itemize}
+\item \emph{NumberGenerator} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item seed, -seed
+	\end{itemize}
+\item \emph{Scheduler} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item timeinc 
+	\item maxiter
+	\item refmass
+	\item reftemp
+	\item gridsize
+	\item rmin
+	\item rmax
+	\item eforce
+	\item emode
+	\item evector
+	\item bforce
+	\item bvector
+	\item gforce
+	\item gvector
+	\end{itemize}
+\item \emph{Backgrd} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item \emph{speciesname}:mass	
+	\item \emph{speciesname}:charge	
+	\item \emph{speciesname}:lambda	
+	\item \emph{speciesname}:drift
+	\item \emph{speciesname}:temp
+	\item \emph{speciesname}:bcmin
+	\item \emph{speciesname}:bcmax
+	\item \emph{speciesname}:rmin
+	\item \emph{speciesname}:rmax
+	\item \emph{speciesname}:hydrostatic
+	\item \emph{speciesname}:imodemin
+	\item \emph{speciesname}:imodemax
+	\end{itemize}
+\item \emph{Beam} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item \emph{speciesname}:mass	
+	\item \emph{speciesname}:charge	
+	\item \emph{speciesname}:lambda	
+	\item \emph{speciesname}:drift
+	\item \emph{speciesname}:temp
+	\item \emph{speciesname}:bcmin
+	\item \emph{speciesname}:bcmax
+	\item \emph{speciesname}:rmin
+	\item \emph{speciesname}:rmax
+	\item \emph{speciesname}:beamdir
+	\item \emph{speciesname}:beampos
+	\item \emph{speciesname}:seff
+	\item \emph{speciesname}:depth
+	\end{itemize}
+\item \emph{DrivenBackgrd} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item \emph{speciesname}:mass	
+	\item \emph{speciesname}:charge	
+	\item \emph{speciesname}:lambda	
+	\item \emph{speciesname}:drift
+	\item \emph{speciesname}:temp
+	\item \emph{speciesname}:bcmin
+	\item \emph{speciesname}:bcmax
+	\item \emph{speciesname}:rmin
+	\item \emph{speciesname}:rmax
+	\item \emph{speciesname}:hydrostatic
+	\item \emph{speciesname}:imodemin
+	\item \emph{speciesname}:imodemax
+	\item \emph{speciesname}:fmin
+	\item \emph{speciesname}:fmax
+	\item \emph{speciesname}:amin
+	\item \emph{speciesname}:amax
+	\item \emph{speciesname}:posmin
+	\item \emph{speciesname}:posmax
+	\item \emph{speciesname}:devmin
+	\item \emph{speciesname}:devmax
+	\item \emph{speciesname}:perturbmin
+	\item \emph{speciesname}:perturbmax
+	\item \emph{speciesname}:startmin
+	\item \emph{speciesname}:startmax
+	\item \emph{speciesname}:stopmin
+	\item \emph{speciesname}:stopmax
+	\end{itemize}
+\item \emph{PoissonSolver} class
+	\begin{itemize}
+	\item -h, --help
+	\item -v, --version
+	\item -i, --input [filename]
+	\item gridsize
+	\item bcmin
+	\item bcmax
+	\item rmin
+	\item rmax
+	\item tolmax
+	\item delta
+	\item maxcy
+	\item kcycle
+	\item ipre
+	\item ipost
+	\item intpol
+	\item temin
+	\item temax
+	\item stdte
+	\item teshape
+	\item qnc
+	\end{itemize}
+\end{itemize}
+
+
+\end{document}

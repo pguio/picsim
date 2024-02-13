@@ -1,0 +1,24 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision m4500 F14
+####
+
+# old blitz
+with_blitz=/usr/local/blitz1
+# new blitz
+#with_blitz=/usr/local/blitz2
+
+with_hdf4=/usr/include/hdf,/usr/lib/hdf
+
+with_fftw3=yes
+
+enable_mpi=no
+
+enable_cxx_flags_preset=no
+
+CXX=icpc
+
+#CXXFLAGS="-xSSE4.2 -O3 -restrict -vec-report1 -no-prec-div -ansi-alias"
+#CXXFLAGS="-xSSE4.2 -O3 -ipo -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+CXXFLAGS="-xSSE4.2 -O3 -ip -restrict -vec-report1 -no-prec-div -no-ansi-alias"

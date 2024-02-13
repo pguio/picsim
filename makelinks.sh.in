@@ -1,0 +1,38 @@
+#! @SHELL@
+# -*- sh -*-
+# @configure_input@
+
+top=`pwd`
+
+if [ -e  m4 ]; then rm -rf m4; fi
+echo linking $HOME/research/codes/m4
+ln -fs $HOME/research/codes/m4 .
+cd $top
+
+cd mudfas/tests
+for file in beamBS2d.hdf beamBS3d.hdf ; do
+	echo linking ../share/$file
+	rm -f $file
+	ln -fs ../share/$file .
+done
+cd $top
+
+cd mudfas/src
+if [ -e  c++-tools ]; then rm -rf c++-tools; fi
+echo linking $HOME/research/codes/c++-tools
+ln -fs $HOME/research/codes/c++-tools .
+cd $top
+
+cd matlab
+if [ -e  @sd ]; then rm -rf @sd; fi
+echo linking $HOME/research/codes/@sd
+ln -fs $HOME/research/codes/@sd .
+cd $top
+
+cd mudfas
+if [ -e  m4 ]; then rm -rf m4; fi
+echo linking $HOME/research/codes/m4
+ln -fs $HOME/research/codes/m4 .
+
+cd $top
+

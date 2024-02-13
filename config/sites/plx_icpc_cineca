@@ -1,0 +1,53 @@
+#!/bin/bash 
+
+# CINECA PLX DataPlex Cluster @ CINECA login.plx.cineca.it
+
+#****************************************************************************
+#*                                                                          *
+#*  Welcome to PLX DataPlex Cluster @ CINECA  -  RedHat EL 5.6!             *
+#*                                                                          *
+#*  Qlogic QDR (40Gb/s) Infiniband high-performance network                 *
+#*                                                                          *
+#*  274 Compute node                                                        *
+#*  - 2 esa-core Intel(R) Xeon(R) CPU E5645 @2.40GHz per Compute node       *
+#*  - 48 GB RAM per Compute node                                            *
+#*  - 2 Nvidia Tesla M2070 GPU per Compute node                             *
+#*  8 Fat node                                                              *
+#*  - 2 quad-core Intel(R) Xeon(R) CPU X5570 @2.93GHz per Fat node          *
+#*  - 128 GB RAM per Fat node                                               *
+#*  3352 Total cores                                                        *
+#*                                                                          *
+#*  6 Remote Visualization Login                                            *
+#*  2 Nvidia QuadroPlex 2200 S4                                             *
+#*                                                                          *
+#*  PBSpro 10.4 batch scheduler                                             *
+#*                                                                          *
+#*  https://hpc.cineca.it/docs/ for a guide on PLX                          *
+#*                                                                          *
+#*  mailto: superc@cineca.it  for support                                   *
+#*                                                                          *
+#****************************************************************************
+
+export PATH=$PATH:/cineca/prod/tools/tcl/8.5.7/xl--10.1/bin/
+. /cineca/prod/environment/module/3.1.6/none/init/bash
+
+module load autoload fftw/3.2.2--openmpi--1.3.3--intel--11.1--binary
+
+with_blitz=$HOME
+with_fftw3=$FFTW_INC,$FFTW_LIB
+with_hdf4=$HOME 
+enable_cxx_flags_preset=no
+enable_optimize=no 
+enable_64bit=yes
+
+CC=icc 
+CXX=icpc 
+
+# serial-O0
+#CXXFLAGS="-O0 -g -C"
+
+# serial-O3
+CXXFLAGS="-xSSE4.2 -O3 -ip -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+#CXXFLAGS="-xSSE4.2 -O3 -ipo -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+
+AR=xiar

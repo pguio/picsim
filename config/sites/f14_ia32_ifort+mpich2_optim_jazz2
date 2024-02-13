@@ -1,0 +1,47 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision m4500 F14
+####
+
+# old blitz
+with_blitz=/usr/local/blitz1
+# new blitz
+#with_blitz=/usr/local/blitz2
+
+with_hdf4=/usr/include/hdf,/usr/lib/hdf
+
+with_fftw3=yes
+
+enable_cxx_flags_preset=no
+
+CXX=icpc
+
+AR=xiar
+
+#CXXFLAGS="-xSSE4.2 -O3 -ipo -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+CXXFLAGS="-xSSE4.2 -O3 -ip -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+
+enable_mpi=yes 
+
+#MPICXX="mpicxx -compile_info -link_info -cxx=icpc"
+#MPICXX="mpicxx -compile_info -cxx=icpc"
+MPICXX="mpicxx -cxx=icpc"
+
+#export CXX=$CXX
+#export MPICH_CXX=$CXX
+#export MPICH2_MPICXX=$CXX
+#export MPICH2_MPICXX_FLAGS="-xSSE4.2 -O3 -ip -restrict -vec-report1 -no-prec-div -no-ansi-alias"
+
+
+#echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+#echo "!!!Don't forget to set the following environment variables!!!"
+#echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+#echo "For Berkeley/C shells"
+#echo setenv MPICH2_MPICXX $MPICH2_MPICXX
+#echo setenv MPICH2_MPICXX_FLAGS \"$CXXFLAGS\"
+#echo "For Bourne shells"
+#echo export MPICH2_MPICXX=$MPICH2_MPICXX
+#echo export MPICH2_MPICXX_FLAGS=\"$CXXFLAGS\"
+#echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+

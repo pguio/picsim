@@ -1,0 +1,82 @@
+#! @SHELL@
+# -*- sh -*-
+# @configure_input@
+
+#
+# $Id: kh2dgrowth.sh.in,v 1.3 2011/03/26 15:36:08 patrick Exp $
+#
+# Copyright (c) 2000-2011 Patrick Guio <patrick.guio@gmail.com>
+# All Rights Reserved.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2.  of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+# Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+prefix=/mn/sothi/u1/patrickg/astro-cluster/research/codes/picsim
+
+filename=kh2dgrowth
+dir=hdf/$filename
+execname=tests/Picsim2d
+conffile=share/kh2dgrowth.conf
+
+case $HOSTTYPE in
+	i386 | *linux) 
+    timelogger="/usr/bin/time -v -o run.log --append"
+		;;
+  solaris)
+    timelogger="/usr/bin/time -p"
+		;;
+	alpha)
+    timelogger="/usr/bin/time"
+		;;
+	*)
+    echo 'A timelogger has to be defined'
+		exit 0
+esac
+
+
+if [ ! -d $dir ] ; then
+	install -d $dir
+fi
+
+if [ -f run.log ]; then
+	rm run.log
+fi
+
+for B in 0.1 0.2 0.3 0.4 0.5 0.6 ; do
+	if [ ! -f $dir/${filename}B$B.hdf ] ; then
+		command="$execname bvector=0,$B -o $filename.hdf -i $conffile"
+		echo $timelogger $command > run.cmd
+ 		($timelogger $command > run.log) > run.cmd 2>&1
+ 		mv $filename.hdf $dir/${filename}B$B.hdf
+ 		mv run.cmd $dir/${filename}B$B.cmd
+ 		mv run.log $dir/${filename}B$B.log
+		gzip -f9 $dir/${filename}B$B.log	
+	fi
+done
+cp $conffile $dir
+
+
+for u in 1.0 2.0 3.0 4.0 5.0 6.0 ; do
+	if [ ! -f $dir/${filename}u$u.hdf ] ; then
+		command="$execname bgrd1:drift=0.0,$u,0.0 bgrd2:drift=0.0,-$u,0.0 -o $filename.hdf -i $conffile"
+		echo $timelogger $command > run.cmd
+ 		($timelogger $command > run.log) > run.cmd 2>&1
+ 		mv $filename.hdf $dir/${filename}u$u.hdf
+ 		mv run.cmd $dir/${filename}u$u.cmd
+ 		mv run.log $dir/${filename}u$u.log
+		gzip -f9 $dir/${filename}u$u.log	
+	fi
+done
+cp $conffile $dir
+

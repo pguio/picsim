@@ -1,0 +1,21 @@
+#
+# MPI test 
+#  
+# $Id: mpi_test.conf32p,v 1.2 2011/03/26 15:36:06 patrick Exp $
+#
+# Copyright (c) 2002-2011 Patrick Guio <patrick.guio@gmail.com>
+#
+#
+
+eforce=yes
+reflambda=192
+Background=bgrd
+Background::ncpu=32
+#
+bgrd::lambda=192/32
+#
+ispec=0,10,50
+#
+GenericPicSim::dl=0
+bgrd::dl=0
+MultiGridSolver::dl=0

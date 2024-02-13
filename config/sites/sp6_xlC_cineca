@@ -1,0 +1,48 @@
+#!/bin/bash 
+
+# CINECA IBM SP6 sp.sp6.cineca.it
+
+#****************************************************************************
+#*                                                                          *
+#*                                                                          *
+#*  Welcome to IBM/SP6 @ CINECA  -  AIX Version 6.1!                        *
+#*                                                                          *
+#*                                                                          *
+#*  /usr/lpp/bos/README for information on  this release of the AIX         *
+#*  https://hpc.cineca.it/content/documentation for a guide on SP6          *
+#*                                                                          * 
+#*  mailto: superc@cineca.it  for support                                   *
+#*                                                                          *
+#****************************************************************************
+
+#** WARNING **
+#Starting from the evening of Thursday March 29, 
+#all the files older than **15** days will be removed
+
+#============================================================================
+#The shutdown of SP6 will occur in a date between 01/May and 15/May/2012.
+#Please do not consider the machine available from 01/May
+#============================================================================
+
+
+export PATH=$PATH:/cineca/prod/tools/tcl/8.5.7/xl--10.1/bin/
+. /cineca/prod/environment/module/3.1.6/none/init/bash
+
+module load autoload fftw
+module load autoload hdf4
+
+with_blitz=$HOME
+with_fftw3=$FFTW_INC,$FFTW_LIB
+with_hdf4=$HDF4_HOME 
+enable_cxx_flags_preset=no
+enable_optimize=no 
+enable_64bit=yes
+
+CC=xlc 
+CXX=xlC 
+# serial-O0
+#CXXFLAGS="-O0 -g -C"
+# serial-O3
+CXXFLAGS="-O3 -qstrict -qstrict_induction -qinline -qansialias -qhot -qunroll=yes -qarch=pwr6 -qtune=pwr6 -qipa"
+LDFLAGS="-L$SZLIB_LIB -L$ZLIB_LIB"
+

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision F26
+####
+
+with_blitz=/usr/local/blitz3
+
+with_hdf4=/usr/include/hdf,/usr/lib64/hdf
+enable_hdf5_output=yes
+with_hdf5=
+
+with_fftw3=yes
+
+enable_cxx_flags_preset=no
+
+CXX=pgc++
+#CXXFLAGS="-std=c++11 -O -Mbounds -DBZ_DEBUG"
+CXXFLAGS="-std=c++11 -O"
+
+#AR=xiar
+AR=ar
+
+
+enable_mpi=no
+
+# tested with mpich version 3.2 and icpc (ICC) 15.0.0 20140723
+#MPICXX="mpicxx -cxx=clang++"
+
+echo configuring for jazz4

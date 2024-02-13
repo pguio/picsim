@@ -1,0 +1,31 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision m4700 FC24
+####
+
+# old blitz
+#with_blitz=/usr/local/blitz1
+# new blitz
+with_blitz=/usr/local/blitz2
+
+with_hdf4=/usr/include/hdf,/usr/lib64/hdf
+enable_hdf5_output=yes
+with_hdf5=/usr/include,/usr/lib64
+
+with_fftw3=yes
+
+enable_cxx_flags_preset=no
+
+CXX=icpc
+
+AR=xiar
+
+CXXFLAGS="-xSSE4.2 -O3 -ip -restrict -qopt-report=2 -no-prec-div -no-ansi-alias"
+
+enable_mpi=yes 
+
+# tested with mpich version 3.2 and icpc (ICC) 15.0.0 20140723
+MPICXX="mpicxx -cxx=icpc"
+
+echo configuring for jazz3

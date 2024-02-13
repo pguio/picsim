@@ -1,0 +1,39 @@
+#!/bin/bash
+
+####
+#### Patrick Dell precision m4700 F19
+####
+
+# old blitz
+#with_blitz=/usr/local/blitz1
+# new blitz
+with_blitz=/phalanx/patrick/blitz2
+
+with_fftw3=
+
+with_hdf4=/usr/include/hdf,/usr/lib64/hdf 
+enable_hdf5_output=yes
+with_hdf5=/usr/include,/usr/lib64
+
+with_plplot=/usr/include/plplot,/usr/lib64
+
+enable_cxx_flags_preset=no
+
+#enable_threadsafe_blitz=
+
+CXX=icpc 
+
+# D__GNUC_MINOR__=5 is a trick to disable float128 support for fftw3 which
+# creates trouble
+CXXFLAGS="-D__GNUC_MINOR__=5 -xSSE4.2 -O3 -restrict -vec-report=2 -no-prec-div -no-ansi-alias"
+#CXXFLAGS="-xSSE4.2 -O3 -restrict -vec-report=2 -no-prec-div -no-ansi-alias"
+
+enable_mpi=yes
+
+LDFLAGS=-L/usr/lib64
+
+LIBS=-lmpi
+
+AR=xiar
+
+echo configuring for phalanx
